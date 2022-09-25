@@ -1,84 +1,59 @@
-import React from 'react';
-import fire from './config/fire';
-import Dashboard from './Dashboard.js';
+import React, { useRef, useState } from "react"
+import { Form, Button, Card, Alert } from "react-bootstrap"
+import { useAuth } from "./AuthContext"
+import { Link, useNavigate } from "react-router-dom";
 
 
-class Login extends React.Component {
-    login() {
-        const email = document.querySelector('#email').value;
-        const password = document.querySelector('#password').value;
+export default function Login() {
+    let navigate = useNavigate();
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const { login } = useAuth()
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState(false)
 
-        fire.auth().signInWithEmailAndPassword(email, password)
-            .then((u) => {
-                console.log("Succesfully logged in");
-            })
-            .catch((err) => {
-                console.log("Error: " + err.toString());
-            })
+  async function handleSubmit(e) {
+    e.preventDefault()
+
+    try {
+      setError("");
+      setLoading(true);
+      await login(emailRef.current.value, passwordRef.current.value);
+      navigate("/")
+    } catch {
+        setError("Failed to log in");
     }
 
-    signUp() {
-        const email = document.querySelector('#email').value;
-        const password = document.querySelector('#password').value;
+    setLoading(false)
+  }
 
-        fire.auth().createUserWithEmailAndPassword(email, password)
-            .then((u) => {
-                console.log("Succesfully logged in");
-            })
-            .catch((err) => {
-                console.log("Error: " + err.toString());
-            })
-    }
-
-    render() {
-        return (
-            <form>
-                <h3>Sign In</h3>
-                <div className="mb-3">
-                    <label>Email address</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Enter email"
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Enter password"
-                    />
-                </div>
-                <div className="mb-3">
-                    <div className="custom-control custom-checkbox d-inline-block">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1"> Remember me </label>
-                    </div>
-                </div>
-                <div className="d-grid">
-                    <button type="submit" className="btn btn-primary" onClick={this.login}>Submit</button>
-                </div>
-                <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p>
-            </form>
-
-            // <div style={{ textAlign: 'center',  backgroundImage: `url("https://via.placeholder.com/500")` }}>
-            //   <div>
-            //     <h1>Groups N Griffins</h1>
-            //     <div>Email</div>
-            //     <input id="email" placeholder="Enter Email.." type="text"/>
-            //   </div>
-            //   <div>
-            //     <div>Password</div>
-            //     <input id="password" placeholder="Enter Password.." type="text"/>
-            //   </div>
-            //   <button style={{margin: '10px'}} onClick={this.login}>Login</button>
-            //   <button style={{margin: '10px'}} onClick={this.signUp}>Sign Up</button>
-            // </div>
-        )
-    }
+  return (
+    <>
+      <Card>
+        <Card.Body>
+          <h2 className="text-center mb-4">Log In</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group id="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" ref={emailRef} required />
+            </Form.Group>
+            <Form.Group id="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" ref={passwordRef} required />
+            </Form.Group>
+            <Button disabled={loading} className="w-100 mt-4" type="submit">
+              Log In
+            </Button>
+          </Form>
+          <div className="w-100 text-center mt-3">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
+        </Card.Body>
+      </Card>
+      <div className="w-100 text-center mt-2">
+        Need an account? <Link to="/signup">Sign Up</Link>
+      </div>
+    </>
+  )
 }
-
-export default Login;

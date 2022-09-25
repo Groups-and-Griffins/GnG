@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import auth from './config/fire';
+import fire from './config/fire';
 
 const AuthContext = React.createContext();
 
@@ -8,26 +8,39 @@ export function useAuth() {
 }
 export function AuthProvider( { children}) {
     const [currentUser, setCurrentUser] = useState();
+    const [loading, setLoading] = useState(true);
 
     function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password)
+        return fire.auth().createUserWithEmailAndPassword(email, password)
     };
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            setCurrentUser(user);
-        });
+    function login(email, password) {
+        return fire.auth().signInWithEmailAndPassword(email, password)
+    }
+    
+    function logout() {
+        return fire.auth().signOut()
+    }
 
-        return unsubscribe;
-    }, [])
+    useEffect(() => {
+        const unsubscribe = fire.auth().onAuthStateChanged(user => {
+          setCurrentUser(user)
+          setLoading(false)
+        })
+    
+        return unsubscribe
+      }, [])
+    
 
     const value = {
         currentUser,
-        signup
+        signup,
+        login,
+        logout
     }
     return (
         <AuthContext.Provider value={value}>
-            {children};
+            {!loading && children}
         </AuthContext.Provider>
     )
 }
