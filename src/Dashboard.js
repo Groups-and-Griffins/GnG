@@ -2,12 +2,21 @@ import React, { useState } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "./AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import {db} from './config/fire';
+import {collection, addDoc} from 'firebase/firestore';
 
 export default function Dashboard() {
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth()
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
 
+//   const userProfile = collection(db, 'users');
+  
+//   const data = {
+//     name: "Michael H",
+//     country: "USA"
+//  };
+//  addDoc(userProfile, data)
   async function handleLogout() {
     setError("")
 
@@ -26,7 +35,7 @@ export default function Dashboard() {
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+          <Link to="/CreateProfile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>
         </Card.Body>

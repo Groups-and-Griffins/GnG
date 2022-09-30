@@ -1,10 +1,11 @@
-import React from "react"
-import Signup from "./Signup"
-import { Container } from "react-bootstrap"
-import { AuthProvider } from "./AuthContext"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Dashboard from "./Dashboard"
-import Login from "./Login"
+import React from "react";
+import Signup from "./Signup";
+import { Container } from "react-bootstrap";
+import { AuthProvider } from "./AuthContext";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./Dashboard";
+import Login from "./Login";
+import CreateProfile from "./CreateProfile";
 import PrivateRoute from './PrivateRoute';
 
 function App() {
@@ -19,9 +20,15 @@ function App() {
                 <Dashboard />
               </PrivateRoute>
               }>
+              <Route exact path='/home' element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }></Route>
             </Route>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/CreateProfile" element={<CreateProfile />} />
             </Routes>
           </AuthProvider>
         </Router>
