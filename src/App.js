@@ -36,7 +36,7 @@ function App() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/helloGriffins" element={<helloGriffins />} />
+            <Route path="/helloGriffins" element={<HelloGriffins />} />
             </Routes>
           </AuthProvider>
         </Router>
