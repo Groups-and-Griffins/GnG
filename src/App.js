@@ -7,6 +7,7 @@ import Dashboard from "./Dashboard";
 import Login from "./Login";
 import CreateProfile from "./CreateProfile";
 import PrivateRoute from './PrivateRoute';
+import helloGriffins from './helloGriffins';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/helloGriffins" element={<helloGriffins />} />
             </Routes>
           </AuthProvider>
         </Router>
