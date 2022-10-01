@@ -8,7 +8,6 @@ import Login from "./Login";
 import CreateProfile from "./CreateProfile";
 import PrivateRoute from './PrivateRoute';
 import helloGriffins from './helloGriffins';
-import playerPage from './playerPage';
 
 function App() {
   return (
@@ -38,7 +37,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/helloGriffins" element={<helloGriffins />} />
-            <Route path="/playerPage" element={<playerPage/>}/>
             </Routes>
           </AuthProvider>
         </Router>
