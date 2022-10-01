@@ -10,13 +10,13 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-//   const userProfile = collection(db, 'users');
-  
-//   const data = {
-//     name: "Michael H",
-//     country: "USA"
-//  };
-//  addDoc(userProfile, data)
+  async function handleUpdateProfile() {
+    try {
+    navigate("/createprofile")
+    } catch {
+      console.log(error);
+    }
+  }
   async function handleLogout() {
     setError("")
 
@@ -35,9 +35,9 @@ export default function Dashboard() {
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
-          <Link to="/CreateProfile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link>
+          <Button className="w-100 mt-4" type="submit" onClick={handleUpdateProfile}>
+              Update Profile
+          </Button>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">

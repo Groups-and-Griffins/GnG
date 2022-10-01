@@ -62,7 +62,7 @@ export default function CreateProfile() {
                     {/* <Form.Control type="username" ref={userNameRef} required /> */}
                 </Form.Group>
                 <Button disabled={loading} className="w-100 mt-4" type="submit">
-                Create Profile
+                    Create Profile
                 </Button>
             </Form>
             </Card.Body>
