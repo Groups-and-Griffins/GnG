@@ -8,6 +8,8 @@ import Login from "./Login";
 import CreateProfile from "./CreateProfile";
 import PrivateRoute from './PrivateRoute';
 import Alex from './Alex';
+import helloGriffins from './helloGriffins';
+
 function App() {
   return (
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
@@ -36,6 +38,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/Alex" element={<Alex />} />
+            <Route path="/helloGriffins" element={<helloGriffins />} />
             </Routes>
           </AuthProvider>
         </Router>
