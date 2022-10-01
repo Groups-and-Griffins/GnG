@@ -9,7 +9,7 @@ import CreateProfile from "./CreateProfile";
 import PrivateRoute from './PrivateRoute';
 import Alex from './Alex';
 import helloGriffins from './helloGriffins';
-import playerPage from './playerPage';
+import PlayerPage from './playerPage';
 
 function App() {
   return (
@@ -40,7 +40,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/Alex" element={<Alex />} />
             <Route path="/helloGriffins" element={<helloGriffins />} />
-            <Route path="/playerPage" element={<playerPage/>}/>
+            <Route path="/playerPage" element={<PlayerPage/>}/>
             </Routes>
           </AuthProvider>
         </Router>
