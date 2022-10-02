@@ -10,7 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import Alex from './Alex';
 import HelloWorld from './helloWorld'
 import HelloGriffins from './helloGriffins';
-import PlayerPage from './playerPage';
+import Update from './update';
 
 function App() {
   return (
@@ -42,7 +42,7 @@ function App() {
             <Route path="/Alex" element={<Alex />} />
             <Route path="/helloworld" element={<HelloWorld />} />
             <Route path="/helloGriffins" element={<HelloGriffins />} />
-            <Route path="/playerPage" element={<PlayerPage/>}/>
+            <Route path="/update" element={<Update />} />
             </Routes>
           </AuthProvider>
         </Router>
