@@ -15,6 +15,7 @@
 .firebaserc
 .github/
 firebase.json
+package-lock.json
 
 
 # misc

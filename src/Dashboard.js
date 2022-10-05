@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Card, Button, Alert } from "react-bootstrap"
+import { Card, Button, Alert, Container } from "react-bootstrap"
 import { useAuth } from "./AuthContext"
 import { Link, useNavigate } from "react-router-dom"
 import {db} from './config/fire';
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   async function handleUpdateProfile() {
     try {
-    navigate("/createprofile")
+    navigate("/calendar")
     } catch {
       console.log(error);
     }
@@ -30,21 +30,25 @@ export default function Dashboard() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <Button className="w-100 mt-4" type="submit" onClick={handleUpdateProfile}>
-              Update Profile
-          </Button>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </div>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+        <div className="w-100" style={{ maxWidth: "400px" }}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">Profile</h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <strong>Email:</strong> {currentUser.email}
+              <Button className="w-100 mt-4" type="submit" onClick={handleUpdateProfile}>
+                  Edit Schedule
+              </Button>
+            </Card.Body>
+          </Card>
+          <div className="w-100 text-center mt-2">
+            <Button variant="link" onClick={handleLogout}>
+              Log Out
+            </Button>
+          </div>
+        </div>
+    </Container>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React, { Component, useState, useRef} from 'react'
-import { Card, Button, Form, Alert } from "react-bootstrap"
+import { Card, Button, Form, Alert, Container } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import fire from './config/fire';
 import {db} from './config/fire';
@@ -38,35 +38,39 @@ export default function CreateProfile() {
         }
     return (
         <>
-        <Card>
-            <Card.Body>
-            <h2 className="text-center mb-4">Create your Profile</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-                <Form.Group id="first-name">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" ref={realNameRef} required />
-                </Form.Group>
-                <Form.Group id="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" ref={userNameRef} required />
-                </Form.Group>
-                <Form.Group id="dndRole">
-                    <Form.Label>Dnd Role</Form.Label>
-                    <Form.Control required as = "select" ref={playerRoleRef} >
-                        <option value="">Select a role</option>
-                        <option value="Player">Player</option>
-                        <option value="DM">Dungeon Master</option>
-                        <option value="NP">No Preference</option>
-                    </Form.Control>
-                    {/* <Form.Control type="username" ref={userNameRef} required /> */}
-                </Form.Group>
-                <Button disabled={loading} className="w-100 mt-4" type="submit">
-                    Create Profile
-                </Button>
-            </Form>
-            </Card.Body>
-        </Card>
+            <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+                <div className="w-100" style={{ maxWidth: "400px" }}>
+                    <Card>
+                        <Card.Body>
+                        <h2 className="text-center mb-4">Create your Profile</h2>
+                        {error && <Alert variant="danger">{error}</Alert>}
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group id="first-name">
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control type="text" ref={realNameRef} required />
+                                </Form.Group>
+                                <Form.Group id="username">
+                                    <Form.Label>Username</Form.Label>
+                                    <Form.Control type="text" ref={userNameRef} required />
+                                </Form.Group>
+                                <Form.Group id="dndRole">
+                                    <Form.Label>Dnd Role</Form.Label>
+                                    <Form.Control required as = "select" ref={playerRoleRef} >
+                                        <option value="">Select a role</option>
+                                        <option value="Player">Player</option>
+                                        <option value="DM">Dungeon Master</option>
+                                        <option value="NP">No Preference</option>
+                                    </Form.Control>
+                                    {/* <Form.Control type="username" ref={userNameRef} required /> */}
+                                </Form.Group>
+                                <Button disabled={loading} className="w-100 mt-4" type="submit">
+                                    Create Profile
+                                </Button>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </div>
+            </Container>
         </>
     )
 }
