@@ -11,6 +11,7 @@ import Alex from './Alex';
 import HelloWorld from './helloWorld'
 import HelloGriffins from './helloGriffins';
 import Update from './update';
+import PlayerPage from './playerPage'
 import Calendar from "./Calendar";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <Route path="/helloworld" element={<HelloWorld />} />
             <Route path="/helloGriffins" element={<HelloGriffins />} />
             <Route path="/update" element={<Update />} />
+            <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
             </Routes>
           </AuthProvider>
