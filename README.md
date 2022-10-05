@@ -1,1 +1,1 @@
- # Groups and Griffins #
+ # Groups and Griffons #
