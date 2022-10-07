@@ -12,9 +12,7 @@
 /build
 /public
 /.firebase
-.firebaserc
 .github/
-firebase.json
 package-lock.json
 
 
