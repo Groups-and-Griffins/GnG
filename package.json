@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,5 +43,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "",
+  "main": "WebControllerSam.js",
+  "devDependencies": {
+    "jest": "^29.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Groups-and-Griffins/GnG.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Groups-and-Griffins/GnG/issues"
+  },
+  "homepage": "https://github.com/Groups-and-Griffins/GnG#readme"
 }

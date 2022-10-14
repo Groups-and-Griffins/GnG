@@ -2,6 +2,9 @@ import React from "react"
 
 export default function helloGriffins(){
     return(
-        <div>helloGriffins</div>
+        helloGriffins
+
     )
 }
+
+module.exports = helloGriffins
