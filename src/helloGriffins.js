@@ -1,8 +1,9 @@
 import React from "react"
+import Input from "react-validation/build/input";
 
 export default function helloGriffins(){
     return(
-        helloGriffins
+        <div>helloGriffins</div>
 
     )
 }
