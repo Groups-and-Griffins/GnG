@@ -1,12 +1,12 @@
 
 const { add, mul, sub, div } = require('./op');
 
-test('2 + 3 = 5', () => {
-  expect(add(2, 3)).toBe(5);
+test('2 + 6 = 8', () => {
+  expect(add(2, 6)).toBe(8);
 });
 
-test('3 * 4 = 12', () => {
-  expect(mul(3, 4)).toBe(12);
+test('4 * 4 = 16', () => {
+  expect(mul(4, 4)).toBe(16);
 });
 
 test('5 - 6 = -1', () => {
