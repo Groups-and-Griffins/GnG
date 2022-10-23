@@ -101,8 +101,8 @@ class Calendar extends Component {
 
   }
 
-  //instert dates into the database
-  insertDatesIntoDatabase(startDate, endDate, startTime, endTime, days, startIndexOfDay, color){
+  //insert dates into the database
+  insertDatesIntoDatabase(startDate, endDate, startTime, endTime, days, startIndexOfDay, startID, color){
     //startDate and EndDate are strings that need the date in the format of year-month-day
     //startIndexOfDay IS SUPER IMPORTANT, TELLS COMPUTER WHAT INDEX OF THE DAYS ARRAY IS THE START
     //this compares the dates like so 20221023 < 20221024
@@ -124,13 +124,27 @@ class Calendar extends Component {
         let monthCount = startMonth;
         let dayCount = startDay;
         let currentIndex = startIndexOfDay;
+
         for(; yearCount <= endYear; yearCount++){
           for(; monthCount <= endMonth; monthCount++){
+            if(monthCount > 12){
+              break;
+            }
             //this loop should only activate if the month is equal to end month
             if(monthCount == endMonth){
               for(; dayCount <= endDay; dayCount++){
                 if(days[currentIndex] == 1){
                   //ADD ITEM TO DATABASE
+                  const newString = "" + yearCount + "-" + monthCount + "-" + dayCount;
+                  const event = [
+                    {
+                      id: startID,
+                      text: "Event "+startID,
+                      start: ""+newString+"T"+startTime,
+                      end: ""+newString+"T"+endTime,
+                      backColor: color
+                    }
+                  ];
                 }
                 currentIndex++;
                 if(currentIndex > days.length){
