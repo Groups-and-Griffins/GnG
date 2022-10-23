@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import "./CalendarStyles.css";
 
+
 const styles = {
   wrap: {
     display: "flex"
@@ -89,7 +90,7 @@ class Calendar extends Component {
         backColor: "#cc4125"
       },
     ];
-
+    //calender format: year-month-day
     const startDate = "2022-10-01";
 
     if (events.text == "Event 4") {
@@ -98,6 +99,100 @@ class Calendar extends Component {
     }
     this.calendar.update({startDate, events});
 
+  }
+
+  //instert dates into the database
+  insertDatesIntoDatabase(startDate, endDate, startTime, endTime, days, startIndexOfDay, color){
+    //startDate and EndDate are strings that need the date in the format of year-month-day
+    //startIndexOfDay IS SUPER IMPORTANT, TELLS COMPUTER WHAT INDEX OF THE DAYS ARRAY IS THE START
+    //this compares the dates like so 20221023 < 20221024
+    if(parseInt(startDate) < parseInt(endDate)){
+      //assuming military time
+      if(parseInt(startTime) < parseInt(endTime)){
+        //assuming at least one 1 in the array of days
+        //IGNORING LEAP YEARS
+        let startYear = parseInt(startDate.substring(0,5));
+        let endYear = parseInt(endDate.substring(0,5));
+        //assuming months are always 2 numbers
+        let startMonth =  parseInt(startDate.substring(5,7));
+        let endMonth = parseInt(endDate.substring(5,7));
+        //assuming days are always 2 numbers
+        let startDay =  parseInt(startDate.substring(7,9));
+        let endDay = parseInt(endDate.substring(7,9));
+        //counter variables
+        let yearCount = startYear;
+        let monthCount = startMonth;
+        let dayCount = startDay;
+        let currentIndex = startIndexOfDay;
+        for(; yearCount <= endYear; yearCount++){
+          for(; monthCount <= endMonth; monthCount++){
+            //this loop should only activate if the month is equal to end month
+            if(monthCount == endMonth){
+              for(; dayCount <= endDay; dayCount++){
+                if(days[currentIndex] == 1){
+                  //ADD ITEM TO DATABASE
+                }
+                currentIndex++;
+                if(currentIndex > days.length){
+                  currentIndex = 0;
+                }
+              }
+            }else{
+              //if the month count doesn't equal end month all days must be included
+              if(monthCount == 2){
+                //febuary
+                let maxMonth = 28;
+                for(; dayCount <= maxMonth; dayCount++){
+                  if(days[currentIndex] == 1){
+                    //ADD ITEM TO DATABASE
+                  }
+                  currentIndex++;
+                  if(currentIndex > days.length){
+                    currentIndex = 0;
+                  }
+                }
+              }else if(monthCount == 4 || monthCount == 6 || monthCount == 9 || monthCount == 11){
+                //april, june, sep, or nov
+                let maxMonth = 30;
+                for(; dayCount <= maxMonth; dayCount++){
+                  if(days[currentIndex] == 1){
+                    //ADD ITEM TO DATABASE
+                  }
+                  currentIndex++;
+                  if(currentIndex > days.length){
+                    currentIndex = 0;
+                  }
+                  
+                }
+              }else{
+                //every other month
+                let maxMonth = 31;
+                for(; dayCount <= maxMonth; dayCount++){
+                  if(days[currentIndex] == 1){
+                    //ADD ITEM TO DATABASE
+                  }
+                  currentIndex++;
+                  if(currentIndex > days.length){
+                    currentIndex = 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }else{
+        return "ERROR: Times are wrong";
+      }
+
+    }else{
+      return "ERROR: Dates are wrong";
+    }
+
+  }
+
+  //export information out of the database
+  exportDatesOutOfDatabase() {
+    
   }
 
   render() {
