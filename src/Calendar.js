@@ -5,7 +5,7 @@ import { withRouter } from './withRouter';
 import "./CalendarStyles.css";
 import fire from './config/fire';
 import {db} from './config/fire';
-import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
 
 const styles = {
   wrap: {
@@ -67,14 +67,106 @@ class Calendar extends Component {
           }
       };
       },
-      eventDeleteHandling: "Update",
+      eventDeleteHandling: "",
+      eventMoveHandling: "Update",
+      onEventDelete: async args => {
+        const modal = await DayPilot.Modal.confirm("Delete Event?");
+        if (!modal.result) {  
+          args.preventDefault(); 
+        }
+        else {
+          const dp = this.calendar;
+          dp.events.update(e);
+          const e = args.e;
+          // Update event text to firestore
+          var id = fire.auth().currentUser.uid;
+          const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            await deleteDoc(docRef)
+            .then(docRef => { 
+              console.log("Doc deleted"); })
+              .catch(error => { console.log(error); })
+            }
+            else {
+              console.log("doc doesn't exist")
+            }
+        }
+      },
+      onEventResized: async args => {
+        const dp = this.calendar;
+        const modal = await DayPilot.Modal.confirm("Change Event Times?");
+        if (!modal.result) { return; }
+        const e = args.e;
+        dp.events.update(e);
+        // Update event text to firestore
+        var id = fire.auth().currentUser.uid;
+        const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log(e.data.start.value);
+          const data = {
+            start: e.data.start.value,
+            end: e.data.end.value,
+          };
+          updateDoc(docRef, data)
+          .then(docRef => { 
+            console.log("Doc Updated"); })
+            .catch(error => { console.log(error); })
+          }
+          else {
+            console.log("doc doesn't exist")
+          }
+      },
+      onEventMoved: async args => {
+        const dp = this.calendar;
+        const modal = await DayPilot.Modal.confirm("Move Event?");
+        if (!modal.result) { return; }
+        const e = args.e;
+        dp.events.update(e);
+        // Update event text to firestore
+        var id = fire.auth().currentUser.uid;
+        const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          console.log(e.data.start.value);
+          const data = {
+            start: e.data.start.value,
+            end: e.data.end.value,
+          };
+          updateDoc(docRef, data)
+          .then(docRef => { 
+            console.log("Doc Updated"); })
+            .catch(error => { console.log(error); })
+          }
+          else {
+            console.log("doc doesn't exist")
+          }
+      },
       onEventClick: async args => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.prompt("Update event text:", args.e.text());
         if (!modal.result) { return; }
         const e = args.e;
         e.data.text = modal.result;
-        dp.events.update(e);  
+        dp.events.update(e);
+        
+        // Update event text to firestore
+        var id = fire.auth().currentUser.uid;
+        const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = {
+            text: e.data.text,
+          };
+          updateDoc(docRef, data)
+          .then(docRef => { 
+            console.log("Doc Updated"); })
+            .catch(error => { console.log(error); })
+          }
+          else {
+            console.log("doc doesn't exist")
+          }
       },
     };
     
