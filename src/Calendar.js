@@ -1,10 +1,11 @@
 import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap"
+import { withRouter } from './withRouter';
 import "./CalendarStyles.css";
 import fire from './config/fire';
 import {db} from './config/fire';
-import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot} from 'firebase/firestore';
 
 const styles = {
   wrap: {
@@ -19,9 +20,9 @@ const styles = {
 };
 
 class Calendar extends Component {
-
   constructor(props) {
     super(props);
+    this.goHome = this.goHome.bind(this);
     this.calendarRef = React.createRef();
     this.state = {
       viewType: "Week",
@@ -29,6 +30,7 @@ class Calendar extends Component {
       timeRangeSelectedHandling: "Enabled",
       onTimeRangeSelected: async args => {
         const dp = this.calendar;
+        this.calendar.update();
         const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
         dp.clearSelection();
         if (!modal.result) { return; }
@@ -44,12 +46,11 @@ class Calendar extends Component {
         var eventList = [];
         Array.prototype.push.apply(eventList, dp.events.list);
         var id = fire.auth().currentUser.uid;
-        const userRef = collection(db, 'users');
         for (const element of eventList) {
           const docRef = doc(db, 'users', id, 'schedule', String(element.id));
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
-              console.log(element.id);
+              console.log(docSnap.data());
           }
           else {
             const data = {
@@ -82,40 +83,24 @@ class Calendar extends Component {
     return this.calendarRef.current.control;
   }
 
-  componentDidMount() {
-    this.setState({
-      startDate: "2022-10-01",
-      events: [
-        {
-          id: 1,
-          text: "Event 1",
-          start: "2022-09-27T10:30:00",
-          end: "2022-09-27T13:00:00"
-        },
-        {
-          id: 2,
-          text: "Event 2",
-          start: "2022-09-28T09:30:00",
-          end: "2022-09-28T11:30:00",
-          backColor: "#6aa84f"
-        },
-        {
-          id: 3,
-          text: "Event 3",
-          start: "2022-09-29T12:00:00",
-          end: "2022-09-29T15:00:00",
-          backColor: "#f1c232"
-        },
-        {
-          id: 4,
-          text: "Event 4",
-          start: "2022-10-01T11:30:00",
-          end: "2022-10-01T14:30:00",
-          backColor: "#cc4125"
-        }
-    ]
-  })
+  async componentDidMount() {
+    const myList = [];
+    var id = fire.auth().currentUser.uid;
+    const querySnapshot = await getDocs(collection(db, "users", id, "schedule"));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.id, " => ", doc.data());
+      const event = doc.data();
+      myList.push(event);
+    });
 
+    const events = myList
+    const startDate = "2022-10-01";
+    this.calendar.update({startDate, events});
+  }
+
+  goHome() {
+    this.props.navigate('/home')
   }
 
   render() {
@@ -141,14 +126,14 @@ class Calendar extends Component {
           />
         </div>
         </div>
-      {/* <Form onClick={handleSubmit}> */}
+      <Form onClick={this.goHome}>
         <Button className="w-100 mt-4" type="button">
           Submit
         </Button>
-      {/* </Form> */}
+      </Form>
       </div>
     );
   }
 }
 
-export default Calendar;
+export default withRouter(Calendar);
