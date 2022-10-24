@@ -57,7 +57,8 @@ class Calendar extends Component {
               id: element.id,
               text: element.text,
               start: element.start.value,
-              end: element.end.value
+              end: element.end.value,
+              backColor: "#6aa84f"
             };
             setDoc(docRef, data)
             .then(docRef => { 
