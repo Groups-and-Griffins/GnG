@@ -35,7 +35,7 @@ export default function CreateProfile() {
         .catch(error => { console.log(error); })
         setLoading(false);
         navigate("/home")
-        }
+    }
     return (
         <>
             <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>

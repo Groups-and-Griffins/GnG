@@ -1,6 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
+import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import "./CalendarStyles.css";
+import fire from './config/fire';
+import {db} from './config/fire';
+import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc} from 'firebase/firestore';
 
 const styles = {
   wrap: {
@@ -35,7 +39,31 @@ class Calendar extends Component {
           end: args.end,
           backColor: "#6aa84f"
         });
-        console.log(dp.events.list)
+
+        // Add events to firestore
+        var eventList = [];
+        Array.prototype.push.apply(eventList, dp.events.list);
+        var id = fire.auth().currentUser.uid;
+        const userRef = collection(db, 'users');
+        for (const element of eventList) {
+          const docRef = doc(db, 'users', id, 'schedule', String(element.id));
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+              console.log(element.id);
+          }
+          else {
+            const data = {
+              id: element.id,
+              text: element.text,
+              start: element.start.value,
+              end: element.end.value
+            };
+            setDoc(docRef, data)
+            .then(docRef => { 
+                console.log("A New Document Field has been added to an existing document"); })
+            .catch(error => { console.log(error); })
+          }
+      };
       },
       eventDeleteHandling: "Update",
       onEventClick: async args => {
@@ -44,11 +72,7 @@ class Calendar extends Component {
         if (!modal.result) { return; }
         const e = args.e;
         e.data.text = modal.result;
-        dp.events.update(e);
-        if (e.data.text == "Event 2") {
-          e.data.eventType = "free time"
-          -console.log(e)
-        }
+        dp.events.update(e);  
       },
     };
     
@@ -59,49 +83,44 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-
-    const events = [
-      {
-        id: 1,
-        text: "Event 1",
-        start: "2022-09-27T10:30:00",
-        end: "2022-09-27T13:00:00"
-      },
-      {
-        id: 2,
-        text: "Event 2",
-        start: "2022-09-28T09:30:00",
-        end: "2022-09-28T11:30:00",
-        backColor: "#6aa84f"
-      },
-      {
-        id: 3,
-        text: "Event 3",
-        start: "2022-09-29T12:00:00",
-        end: "2022-09-29T15:00:00",
-        backColor: "#f1c232"
-      },
-      {
-        id: 4,
-        text: "Event 4",
-        start: "2022-10-01T11:30:00",
-        end: "2022-10-01T14:30:00",
-        backColor: "#cc4125"
-      },
-    ];
-
-    const startDate = "2022-10-01";
-
-    if (events.text == "Event 4") {
-      console.log('here')
-      events.backColor = "#f1c232";
-    }
-    this.calendar.update({startDate, events});
+    this.setState({
+      startDate: "2022-10-01",
+      events: [
+        {
+          id: 1,
+          text: "Event 1",
+          start: "2022-09-27T10:30:00",
+          end: "2022-09-27T13:00:00"
+        },
+        {
+          id: 2,
+          text: "Event 2",
+          start: "2022-09-28T09:30:00",
+          end: "2022-09-28T11:30:00",
+          backColor: "#6aa84f"
+        },
+        {
+          id: 3,
+          text: "Event 3",
+          start: "2022-09-29T12:00:00",
+          end: "2022-09-29T15:00:00",
+          backColor: "#f1c232"
+        },
+        {
+          id: 4,
+          text: "Event 4",
+          start: "2022-10-01T11:30:00",
+          end: "2022-10-01T14:30:00",
+          backColor: "#cc4125"
+        }
+    ]
+  })
 
   }
 
   render() {
     return (
+      <div>
       <div style={styles.wrap}>
         <div style={styles.left}>
           <DayPilotNavigator
@@ -121,6 +140,12 @@ class Calendar extends Component {
             ref={this.calendarRef}
           />
         </div>
+        </div>
+      {/* <Form onClick={handleSubmit}> */}
+        <Button className="w-100 mt-4" type="button">
+          Submit
+        </Button>
+      {/* </Form> */}
       </div>
     );
   }
