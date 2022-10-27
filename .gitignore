@@ -13,7 +13,6 @@
 /public
 /.firebase
 .github/
-package-lock.json
 
 
 # misc

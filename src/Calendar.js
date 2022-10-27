@@ -67,14 +67,14 @@ class Calendar extends Component {
           }
       };
       },
-      eventDeleteHandling: "",
+      eventDeleteHandling: "Update",
       eventMoveHandling: "Update",
       onEventDelete: async args => {
-        const modal = await DayPilot.Modal.confirm("Delete Event?");
-        if (!modal.result) {  
-          args.preventDefault(); 
-        }
-        else {
+        // const modal = await DayPilot.Modal.confirm("Delete Event?");
+        // if (!modal.result) {  
+        //   args.preventDefault(); 
+        // }
+        // else {
           const dp = this.calendar;
           dp.events.update(e);
           const e = args.e;
@@ -91,7 +91,7 @@ class Calendar extends Component {
             else {
               console.log("doc doesn't exist")
             }
-        }
+        //}
       },
       onEventResized: async args => {
         const dp = this.calendar;
