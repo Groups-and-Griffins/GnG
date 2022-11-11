@@ -193,11 +193,12 @@ class Calendar extends Component {
   }
 
   goHome() {
-    this.props.navigate('/home')
+    this.props.navigate('/dashboard')
   }
 
   render() {
     return (
+      <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
       <div>
       <div style={styles.wrap}>
         <div style={styles.left}>
@@ -219,12 +220,13 @@ class Calendar extends Component {
           />
         </div>
         </div>
-      <Form onClick={this.goHome}>
-        <Button className="w-100 mt-4" type="button">
+      <Form onClick={this.goHome} className="d-flex align-items-center">
+        <Button className="w-50 mt-4 mx-auto" type="button">
           Submit
         </Button>
       </Form>
       </div>
+      </Container>
     );
   }
 }

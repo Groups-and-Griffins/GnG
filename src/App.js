@@ -13,10 +13,11 @@ import HelloGriffins from './helloGriffins';
 import Update from './update';
 import PlayerPage from './playerPage'
 import Calendar from "./Calendar";
+import Home from "./Home";
 
 function App() {
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+    // <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
       <div className="w-100" style={{  }}>
         <Router>
           <AuthProvider>
@@ -26,19 +27,21 @@ function App() {
                 <Dashboard />
               </PrivateRoute>
               }>
-              <Route exact path='/home' element={
+            </Route>
+              <Route exact path='/dashboard' element={
                 <PrivateRoute>
                   <Dashboard />
                 </PrivateRoute>
               }>
               </Route>
-            </Route>
+
             <Route exact path='/createprofile' element={
                 <PrivateRoute>
                   <CreateProfile />
                 </PrivateRoute>
               }>
               </Route>
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/Alex" element={<Alex />} />
@@ -51,7 +54,7 @@ function App() {
           </AuthProvider>
         </Router>
       </div>
-    </Container>
+    // </Container>
   )
 }
 

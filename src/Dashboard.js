@@ -22,7 +22,7 @@ export default function Dashboard() {
 
     try {
       await logout()
-      navigate("/login")
+      navigate("/home")
     } catch {
       setError("Failed to log out")
     }
