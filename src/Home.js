@@ -11,7 +11,7 @@ export default function Home() {
           <div className="row">
             <div className="col-lg-8">
               <nav className="navbar navbar-expand-lg custom_nav-container ">
-                <a className="navbar-brand" href="index.html">
+                <a className="navbar-brand" href="/home">
                   <span>
                     Groups&Griffons
                   </span>
@@ -23,7 +23,7 @@ export default function Home() {
                   <div className="d-flex  flex-column flex-lg-row align-items-center">
                     <ul className="navbar-nav  ">
                       <li className="nav-item active">
-                        <a className="nav-link" href="index.html">Home <span className="sr-only">(current)</span></a>
+                        <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
                       </li>
                       <li className="nav-item">
                         <a className="nav-link" href="about.html">About </a>
