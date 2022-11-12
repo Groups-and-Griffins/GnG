@@ -3,8 +3,8 @@ import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-
 import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import { withRouter } from './withRouter';
 import "./CalendarStyles.css";
-import fire from './config/fire';
-import {db} from './config/fire';
+import fire from './UserAuth/config/fire';
+import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
 

@@ -34,7 +34,7 @@ export default function CreateProfile() {
             console.log("A New Document Field has been added to an existing document"); })
         .catch(error => { console.log(error); })
         setLoading(false);
-        navigate("/home");
+        navigate("/dashboard");
     }
     return (
         <>

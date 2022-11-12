@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Card, Button, Alert, Container } from "react-bootstrap"
-import { useAuth } from "./AuthContext"
+import { useAuth } from "./UserAuth/AuthContext";
 import { Link, useNavigate } from "react-router-dom"
-import {db} from './config/fire';
+import {db} from './UserAuth/config/fire';
 import {collection, addDoc} from 'firebase/firestore';
 
 import SideNavBar from "./SideNavBar";
