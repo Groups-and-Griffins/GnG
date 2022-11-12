@@ -120,7 +120,7 @@ class Calendar extends Component {
             console.log("doc doesn't exist")
           }
       },
-      eventMoveHandling: "Enabled",
+      eventMoveHandling: "Update",
       onEventMoved: async args => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.confirm("Move Event?");
@@ -146,7 +146,7 @@ class Calendar extends Component {
             console.log("doc doesn't exist")
           }
       },
-      eventClickHandling: "Enabled",
+      eventClickHandling: "Update",
       onEventClick: async args => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.prompt("Update event text:", args.e.text());
