@@ -15,6 +15,7 @@ import PlayerPage from './4800Activities/playerPage'
 import Calendar from "./Calendar";
 import Home from "./Home";
 import Search from "./Search";
+import Team from "./Team";
 
 export default function App() {
   return (
@@ -45,6 +46,12 @@ export default function App() {
               <Route exact path='/calendar' element={
                 <PrivateRoute>
                   <Calendar />
+                </PrivateRoute>
+              }>
+              </Route>
+              <Route exact path='/team' element={
+                <PrivateRoute>
+                  <Team />
                 </PrivateRoute>
               }>
               </Route>

@@ -5,12 +5,13 @@ import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/rea
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {FaSearch, FaHome, FaUser} from 'react-icons/fa';
-import {MdLogout} from 'react-icons/md';
+import {MdLogout, MdOutlineGroup} from 'react-icons/md';
 
 export default function SideNavBar() {
     const navigate = useNavigate();
     const { currentUser, logout } = useAuth();
     const [error, setError] = useState("");
+    let toggled = false;
     async function handleLogout() {
         setError("")
         try {
@@ -29,8 +30,10 @@ export default function SideNavBar() {
                       break;
                   case "search":
                       navigate("/search");
-                      
                       break;
+                case "team":
+                    navigate("/team");
+                    break;
                   case "profile":
                       navigate("/dashboard");
                       break;
@@ -40,7 +43,13 @@ export default function SideNavBar() {
               }
           } }
           onToggle={() => {
-                
+            toggled = !toggled;
+            if (document.getElementById('myDiv') !== null) {
+                if(toggled)
+                    document.getElementById('myDiv').style.paddingLeft = "16rem";
+                else
+                    document.getElementById('myDiv').style.paddingLeft = "5rem";
+            }
           }}
       >
               <SideNav.Toggle />
@@ -59,6 +68,14 @@ export default function SideNavBar() {
                       </NavIcon>
                       <NavText>
                           Search
+                      </NavText>
+                  </NavItem>
+                  <NavItem eventKey="team">
+                      <NavIcon>
+                          <MdOutlineGroup />
+                      </NavIcon>
+                      <NavText>
+                          Team
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="profile">

@@ -33,6 +33,11 @@ export default function Dashboard() {
   return (
     <>
     <SideNavBar/>
+    <header className="custom_navbar">
+        <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
+          Profile
+        </span>
+      </header>
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
         <div className="w-100" style={{ maxWidth: "400px" }}>
           <Card>

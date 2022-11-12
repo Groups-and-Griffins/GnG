@@ -28,7 +28,7 @@ class Calendar extends Component {
     this.state = {
       viewType: "Week",
       durationBarVisible: false,
-      timeRangeSelectedHandling: "Enabled",
+      timeRangeSelectedHandling: "Update",
       onTimeRangeSelected: async args => {
         const dp = this.calendar;
         this.calendar.update();
@@ -69,7 +69,6 @@ class Calendar extends Component {
       };
       },
       eventDeleteHandling: "Update",
-      eventMoveHandling: "Update",
       onEventDelete: async args => {
         // const modal = await DayPilot.Modal.confirm("Delete Event?");
         // if (!modal.result) {  
@@ -94,6 +93,7 @@ class Calendar extends Component {
             }
         //}
       },
+      eventResizeHandling: "Update",
       onEventResized: async args => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.confirm("Change Event Times?");
@@ -106,6 +106,7 @@ class Calendar extends Component {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           console.log(e.data.start.value);
+          console.log(e.data.end.value);
           const data = {
             start: e.data.start.value,
             end: e.data.end.value,
@@ -119,6 +120,7 @@ class Calendar extends Component {
             console.log("doc doesn't exist")
           }
       },
+      eventMoveHandling: "Enabled",
       onEventMoved: async args => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.confirm("Move Event?");
@@ -144,6 +146,7 @@ class Calendar extends Component {
             console.log("doc doesn't exist")
           }
       },
+      eventClickHandling: "Enabled",
       onEventClick: async args => {
         const dp = this.calendar;
         const modal = await DayPilot.Modal.prompt("Update event text:", args.e.text());
@@ -189,7 +192,7 @@ class Calendar extends Component {
     });
 
     const events = myList
-    const startDate = "2022-10-01";
+    const startDate = "2022-11-14";
     this.calendar.update({startDate, events});
   }
 
@@ -199,36 +202,39 @@ class Calendar extends Component {
 
   render() {
     return (
+      <><header className="custom_navbar">
+        <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
+          Welcome
+        </span>
+      </header>
       <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-        <SideNavBar/>
-        <div>
-        <div style={styles.wrap}>
-          <div style={styles.left}>
-            <DayPilotNavigator
-              selectMode={"week"}
-              startDate={"2022-10-01"}
-              selectionDay={"2022-10-01"}
-              onTimeRangeSelected={ args => {
-                this.calendar.update({
-                  startDate: args.day
-                });
-              }}
-            />
+          <SideNavBar />
+          <div>
+            <div style={styles.wrap}>
+              <div style={styles.left}>
+                <DayPilotNavigator
+                  selectMode={"week"}
+                  startDate={"2022-11-14"}
+                  selectionDay={"2022-11-14"}
+                  onTimeRangeSelected={args => {
+                    this.calendar.update({
+                      startDate: args.day
+                    });
+                  } } />
+              </div>
+              <div style={styles.main}>
+                <DayPilotCalendar
+                  {...this.state}
+                  ref={this.calendarRef} />
+              </div>
+            </div>
+            <Form onClick={this.goHome} className="d-flex align-items-center">
+              <Button className="w-50 mt-4 mx-auto" type="button">
+                Submit
+              </Button>
+            </Form>
           </div>
-          <div style={styles.main}>
-            <DayPilotCalendar
-              {...this.state}
-              ref={this.calendarRef}
-            />
-          </div>
-          </div>
-        <Form onClick={this.goHome} className="d-flex align-items-center">
-          <Button className="w-50 mt-4 mx-auto" type="button">
-            Submit
-          </Button>
-        </Form>
-        </div>
-      </Container>
+        </Container></>
     );
   }
 }
