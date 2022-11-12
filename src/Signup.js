@@ -17,11 +17,10 @@ export default function Signup() {
 
     async function handleSubmit(e) {
       e.preventDefault()
-
       if (passwordRef.current.value !== passwordConfirmRef.current.value) {
           return setError('Passwords do not match');
       }
-
+      
       try {
           setError('');
           setLoading(true);
@@ -31,8 +30,10 @@ export default function Signup() {
           promise.catch(function (error) {
               var errorCode = error.code;
               console.log(`GOT ERROR: ` + errorCode)
-              if (errorCode == 'auth/weak-password') return // password to weak. Minimal 6 characters
-              if (errorCode == 'auth/email-already-in-use') return // Return a email already in use error
+              if (errorCode == 'auth/weak-password') 
+                return setError('Password must be longer than six characters');// password to weak. Minimal 6 characters
+              if (errorCode == 'auth/email-already-in-use')
+               return setError('This email is already in use');// Return a email already in use error
           });
         
           // When no errors create the account

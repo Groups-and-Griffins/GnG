@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert, Container } from "react-bootstrap"
 import { useAuth } from "./AuthContext"
 import { Link, useNavigate } from "react-router-dom";
+import fire from './config/fire';
 
 
 export default function Login() {
@@ -18,8 +19,19 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/calendar")
+      //await login(emailRef.current.value, passwordRef.current.value);
+      var promise = fire.auth().signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
+      promise.catch(function (error) {
+        var errorCode = error.code;
+        console.log(errorCode)
+        if (errorCode == 'auth/wrong-password') 
+          setError('Incorrect Password');// password incorrect
+        if (errorCode == 'auth/user-not-found') 
+          setError('User not found');// password incorrect
+      });
+      promise.then(function () {
+        navigate("/calendar");
+    });
     } catch {
       setError("Failed to log in");
     }
