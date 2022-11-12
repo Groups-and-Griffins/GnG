@@ -25,7 +25,7 @@ function App() {
             <Routes>
             <Route exact path='/' element={
               <PrivateRoute>
-                <Dashboard />
+                <Home />
               </PrivateRoute>
               }>
             </Route>
@@ -39,6 +39,12 @@ function App() {
             <Route exact path='/createprofile' element={
                 <PrivateRoute>
                   <CreateProfile />
+                </PrivateRoute>
+              }>
+              </Route>
+              <Route exact path='/calendar' element={
+                <PrivateRoute>
+                  <Calendar />
                 </PrivateRoute>
               }>
               </Route>

@@ -62,7 +62,7 @@ export default function Signup() {
 
  return (
     <>
-          <header className="header_section">
+      <header className="header_section">
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-8">
@@ -119,7 +119,7 @@ export default function Signup() {
                   <Form.Control type="email" ref={emailRef} required />
                 </Form.Group>
                 <Form.Group id="password">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>Password (More than 6 characters)</Form.Label>
                   <Form.Control type="password" ref={passwordRef} required />
                 </Form.Group>
                 <Form.Group id="password-confirm">

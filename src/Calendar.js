@@ -6,6 +6,7 @@ import "./CalendarStyles.css";
 import fire from './config/fire';
 import {db} from './config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
+import SideNavBar from './SideNavBar';
 
 const styles = {
   wrap: {
@@ -199,33 +200,34 @@ class Calendar extends Component {
   render() {
     return (
       <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-      <div>
-      <div style={styles.wrap}>
-        <div style={styles.left}>
-          <DayPilotNavigator
-            selectMode={"week"}
-            startDate={"2022-10-01"}
-            selectionDay={"2022-10-01"}
-            onTimeRangeSelected={ args => {
-              this.calendar.update({
-                startDate: args.day
-              });
-            }}
-          />
+        <SideNavBar/>
+        <div>
+        <div style={styles.wrap}>
+          <div style={styles.left}>
+            <DayPilotNavigator
+              selectMode={"week"}
+              startDate={"2022-10-01"}
+              selectionDay={"2022-10-01"}
+              onTimeRangeSelected={ args => {
+                this.calendar.update({
+                  startDate: args.day
+                });
+              }}
+            />
+          </div>
+          <div style={styles.main}>
+            <DayPilotCalendar
+              {...this.state}
+              ref={this.calendarRef}
+            />
+          </div>
+          </div>
+        <Form onClick={this.goHome} className="d-flex align-items-center">
+          <Button className="w-50 mt-4 mx-auto" type="button">
+            Submit
+          </Button>
+        </Form>
         </div>
-        <div style={styles.main}>
-          <DayPilotCalendar
-            {...this.state}
-            ref={this.calendarRef}
-          />
-        </div>
-        </div>
-      <Form onClick={this.goHome} className="d-flex align-items-center">
-        <Button className="w-50 mt-4 mx-auto" type="button">
-          Submit
-        </Button>
-      </Form>
-      </div>
       </Container>
     );
   }

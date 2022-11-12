@@ -11,7 +11,7 @@ export default function Home() {
           <div className="row">
             <div className="col-lg-8">
               <nav className="navbar navbar-expand-lg custom_nav-container ">
-                <a className="navbar-brand" href="/home">
+                <a className="navbar-brand" href="/calendar">
                   <span>
                     Groups&Griffons
                   </span>
