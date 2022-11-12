@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom"
 import {db} from './config/fire';
 import {collection, addDoc} from 'firebase/firestore';
 
+import SideNavBar from "./SideNavBar";
+
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -30,6 +32,7 @@ export default function Dashboard() {
 
   return (
     <>
+    <SideNavBar/>
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
         <div className="w-100" style={{ maxWidth: "400px" }}>
           <Card>
@@ -43,9 +46,10 @@ export default function Dashboard() {
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            <Button variant="link" onClick={handleLogout} style = {{color:"#F0F8FF"}}>
+            <Button variant="link" onClick={handleLogout} style = {{color:"#F0F8FF"}} >
               Log Out
             </Button>
+           
           </div>
         </div>
     </Container>

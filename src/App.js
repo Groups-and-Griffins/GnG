@@ -14,6 +14,7 @@ import Update from './update';
 import PlayerPage from './playerPage'
 import Calendar from "./Calendar";
 import Home from "./Home";
+import Search from "./Search";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             <Route path="/update" element={<Update />} />
             <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/search" element={<Search />} />
             </Routes>
           </AuthProvider>
         </Router>
