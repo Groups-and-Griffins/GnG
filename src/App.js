@@ -55,7 +55,7 @@ export default function App() {
                 </PrivateRoute>
               }>
               </Route>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
