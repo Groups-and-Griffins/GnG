@@ -34,6 +34,8 @@ export default function Signup() {
                 return setError('Password must be longer than six characters');// password to weak. Minimal 6 characters
               if (errorCode == 'auth/email-already-in-use')
                return setError('This email is already in use');// Return a email already in use error
+              if (errorCode == 'auth/invalid-email')
+               return setError('Invalid email address');// Return a email invalid error
           });
         
           // When no errors create the account

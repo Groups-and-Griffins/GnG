@@ -8,3 +8,27 @@ body {
   font-family: 'Fira Sans', sans-serif;
 }
 
+.searchResultContainer {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.searchResult {
+  background-color: #FFF;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  padding-left: 50px;
+  padding-right: 50px;
+  cursor: pointer;
+}
+.searchResult:hover {
+  background-color: #bdbcbc;
+}
+
+.noSearchResult {
+  background-color: #FFF;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  padding-left: 50px;
+  padding-right: 50px;
+}

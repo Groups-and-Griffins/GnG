@@ -6,10 +6,8 @@ import {InputGroup, Form, Button, Container} from 'react-bootstrap';
 
 export default function Search() {
     const searchRef = useRef();
-    const handleKeypress = (e) => {
-        //it triggers by pressing the enter key
+    const handleKeypress = (e) => {  //it triggers by pressing the enter key
       if (e.which === 13) {
-        console.log("here")
         handleSubmit();
       }
     };
@@ -24,33 +22,28 @@ export default function Search() {
         const q = query(usersRef, where("username", "==", searchRef.current.value));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+            // const time = new Date();
+            // const timeStr = time.toLocaleTimeString();
             let div = document.createElement('div');
-            div.style.textAlign="center";
-            div.style.paddingBottom="1rem";
-            const time = new Date();
-            const timeStr = time.toLocaleTimeString();
-            div.innerHTML =  `<span style="background-color: white; padding:0.5rem; border-radius:0.5rem; padding-left: 100px; padding-right: 100px">${doc.data().username}</span>`;
+            div.id="search";
+            div.className = "searchResultContainer";
+            div.innerHTML =  `<span class = "searchResult" >${doc.data().username}</span>`;
             e.appendChild(div);
+    
         });
 
         if(querySnapshot.empty) {
             let div = document.createElement('div');
-            div.style.textAlign="center";
-            div.style.paddingBottom="1rem";
-            const time = new Date();
-            const timeStr = time.toLocaleTimeString();
-            div.innerHTML =  `<span style="background-color: white; padding:0.5rem; border-radius:0.5rem; padding-left: 100px; padding-right: 100px">No user found</span>`;
+            div.id="search";
+            div.className = "searchResultContainer";
+            div.innerHTML =  `<span class = "noSearchResult" >No user found</span>`;
             e.appendChild(div);
         }
-        // let div = document.createElement('div');
-        // div.style.textAlign="center";
-        // div.style.paddingBottom="1rem";
-        // const time = new Date();
-        // const timeStr = time.toLocaleTimeString();
-        // div.innerHTML =  `<span style="background-color: white; padding:0.5rem; border-radius:0.5rem; padding-left: 100px; padding-right: 100px">${timeStr}</span>`;
-        // e.appendChild(div);
+        document.getElementById('search').addEventListener('click', clickUser);
+
+        function clickUser() {
+            console.log("here");
+        }
     }
     
     return (
