@@ -6,6 +6,13 @@ import {InputGroup, Form, Button, Container} from 'react-bootstrap';
 
 export default function Search() {
     const searchRef = useRef();
+    const handleKeypress = (e) => {
+        //it triggers by pressing the enter key
+      if (e.which === 13) {
+        console.log("here")
+        handleSubmit();
+      }
+    };
     async function handleSubmit(e) {
         // console.log(searchRef.current.value);
         var e = document.getElementById("container");
@@ -50,12 +57,12 @@ export default function Search() {
         <>
         <SideNavBar/>
         <header className="custom_navbar">
-            <span id= "myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
+            <span id= "myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
             Search for teams or teammates
             </span>
         </header>
         <Container className="d-flex align-items-center justify-content-center" >
-            <InputGroup className="mb-3 w-50 mx-auto" style = {{marginTop:"4.5rem"}}>
+            <InputGroup className="mb-3 w-50 mx-auto" onKeyPress={handleKeypress} style = {{marginTop:"4.5rem"}}>
                 <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                 <Form.Control ref={searchRef}
                 placeholder="Username"

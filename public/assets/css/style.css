@@ -78,8 +78,9 @@ body {
 .header_section {
   /* padding-top: 15px; */
   background-color: #4a3ea3;
-  position: absolute;
+  position: fixed;
   width: 100%;
+  z-index: 100;
 }
 
 .custom_navbar {
@@ -104,16 +105,19 @@ body {
   padding: 10px 30px;
   color: #f9fcfb;
   text-align: center;
+  border-radius: 0.5rem;
   /* text-transform: uppercase; */
 }
 
 a,
-a:hover,
+a:hover 
 a:focus {
   text-decoration: none;
 }
 
-a:hover,
+a:hover {
+  background-color: #b966ea;
+}
 a:focus {
   color: initial;
 }
@@ -131,6 +135,8 @@ a:focus {
   font-weight: bold;
   font-size: 24px;
   color: #fafcfd;
+  border-radius: 0.5rem;
+  padding: 5px 20px;
 }
 
 .custom_nav-container .nav_search-btn {

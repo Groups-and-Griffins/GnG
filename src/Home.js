@@ -21,7 +21,7 @@ export default function Home() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                   <div className="d-flex  flex-column flex-lg-row align-items-center">
                     <ul className="navbar-nav  ">
-                      <li className="nav-item active">
+                      <li className="nav-item">
                         <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
                       </li>
                       <li className="nav-item">
