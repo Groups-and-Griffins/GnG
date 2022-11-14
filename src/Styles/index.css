@@ -13,6 +13,10 @@ body {
   padding-bottom: 1rem;
 }
 
+.noSearchResultContainer {
+  text-align: center;
+  padding-bottom: 1rem;
+}
 .searchResult {
   background-color: #FFF;
   padding: 0.5rem;

@@ -5,7 +5,7 @@ import { withRouter } from './withRouter';
 import "./CalendarStyles.css";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
-import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
 
 const styles = {
@@ -194,7 +194,17 @@ class Calendar extends Component {
     const events = myList
     const startDate = "2022-11-14";
     this.calendar.update({startDate, events});
-  }
+
+      
+  const usersRef = collection(db, "users");
+  const q = query(usersRef, where("userID", "==", fire.auth().currentUser.uid));
+  const querySnapshot2 = await getDocs(q);
+  querySnapshot2.forEach((doc) => {
+    console.log(doc.data().username);
+    var e = document.getElementById("myDiv");
+    e.innerHTML = "Welcome, " + doc.data().username;
+  })
+}
 
   goHome() {
     this.props.navigate('/dashboard')
@@ -235,6 +245,9 @@ class Calendar extends Component {
                 </Button>
               </div>
             </div>
+              {/* <div>
+                <h3>ID: {this.props.dataFromParent}</h3>
+              </div> */}
           </Container>
       </>
     );

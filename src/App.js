@@ -19,6 +19,7 @@ import Team from "./Team";
 import User from "./User";
 
 export default function App() {
+  var id;
   return (
     // <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
       <div className="w-100" style={{  }}>
@@ -68,7 +69,7 @@ export default function App() {
             <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/user/:id" element={<User />} />
+            <Route path="/user/:id" element={<User/>}/>
             </Routes>
           </AuthProvider>
         </Router>
