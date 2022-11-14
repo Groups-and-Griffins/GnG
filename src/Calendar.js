@@ -195,7 +195,6 @@ class Calendar extends Component {
 
     const events = myList
     const startDate = "2022-11-14";
- d0c0889b8eac02ed47a280e68e011635191019cc
     this.calendar.update({startDate, events});
 
       
@@ -212,7 +211,7 @@ class Calendar extends Component {
   goHome() {
     this.props.navigate('/dashboard')
   }
-  
+
   render() {
     return (
       <>
