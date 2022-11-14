@@ -21,7 +21,7 @@ import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const styles = {
   wrap: {
@@ -40,9 +40,9 @@ function withParams(Component) {
 }
 
 class User extends Component {
-  //userID should be given when called
-  constructor(props, userID) {
+  constructor(props) {
     super(props);
+    this.searchedUserID = useSearchParams()[0]();
     this.goHome = this.goHome.bind(this);
     this.calendarRef = React.createRef();
     this.state = {
@@ -66,7 +66,7 @@ class User extends Component {
         // Add events to firestore
         var eventList = [];
         Array.prototype.push.apply(eventList, dp.events.list);
-        var id = fire.auth().userID;
+        var id = fire.auth().currentUser.uid;
         for (const element of eventList) {
           const docRef = doc(db, 'users', id, 'schedule', String(element.id));
           const docSnap = await getDoc(docRef);
@@ -99,7 +99,7 @@ class User extends Component {
           dp.events.update(e);
           const e = args.e;
           // Update event text to firestore
-          var id = fire.auth().userID;
+          var id = fire.auth().currentUser.uid;
           const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
@@ -121,7 +121,7 @@ class User extends Component {
         const e = args.e;
         dp.events.update(e);
         // Update event text to firestore
-        var id = fire.auth().userID;
+        var id = fire.auth().currentUser.uid;
         const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -148,7 +148,7 @@ class User extends Component {
         const e = args.e;
         dp.events.update(e);
         // Update event text to firestore
-        var id = fire.auth().userID;
+        var id = fire.auth().currentUser.uid;
         const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -176,7 +176,7 @@ class User extends Component {
         dp.events.update(e);
         
         // Update event text to firestore
-        var id = fire.auth().userID;
+        var id = fire.auth().currentUser.uid;
         const docRef = doc(db, 'users', id, 'schedule', String(e.data.id));
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {

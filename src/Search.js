@@ -49,7 +49,7 @@ export default function Search() {
             const id = '59f781ee-b906-3c7a-e471-ee72aedca51c'
             //navigate("/user")
             navigate(
-            generatePath("/user/:id/", {
+            generatePath("/user?id=:id", {
                 id: id,
               }));
         }

@@ -68,7 +68,7 @@ export default function App() {
             <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/user/:id" element={<User />} />
+            <Route path="/user" element={<User />} />
             </Routes>
           </AuthProvider>
         </Router>
