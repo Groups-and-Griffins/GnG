@@ -1,10 +1,13 @@
 import React, { Component, useState, useRef} from "react";
 import { collection, query, where, getDoc, getDocs } from "firebase/firestore";
 import {db} from './UserAuth/config/fire';
+import { Link, useNavigate } from "react-router-dom";
+import { generatePath } from "react-router";
 import SideNavBar from './SideNavBar';
 import {InputGroup, Form, Button, Container} from 'react-bootstrap';
 
 export default function Search() {
+    let navigate = useNavigate();
     const searchRef = useRef();
     const handleKeypress = (e) => {  //it triggers by pressing the enter key
       if (e.which === 13) {
@@ -43,6 +46,12 @@ export default function Search() {
 
         function clickUser() {
             console.log("here");
+            const id = '59f781ee-b906-3c7a-e471-ee72aedca51c'
+            //navigate("/user")
+            navigate(
+            generatePath("/user/:id/", {
+                id: id,
+              }));
         }
     }
     

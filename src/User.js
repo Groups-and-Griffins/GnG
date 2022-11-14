@@ -1,3 +1,17 @@
+// import React from 'react';
+// import { useParams } from 'react-router-dom';
+
+// export default function User() {
+//   let { id } = useParams();
+//   return (
+//     <>
+//     <div>UserProfile</div>
+//     <div>
+//       <h3>ID: {id}</h3>
+//     </div>
+//     </>
+//   )
+// }
 import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import { Form, Button, Card, Alert, Container, InputGroup } from "react-bootstrap"
@@ -7,6 +21,7 @@ import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
+import { useParams } from 'react-router-dom';
 
 const styles = {
   wrap: {
@@ -20,7 +35,11 @@ const styles = {
   }
 };
 
-class Calendar extends Component {
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+
+class User extends Component {
   constructor(props) {
     super(props);
     this.goHome = this.goHome.bind(this);
@@ -181,6 +200,8 @@ class Calendar extends Component {
   }
 
   async componentDidMount() {
+    const Userid = this.props.match.params;
+    console.log(Userid);
     const myList = [];
     var id = fire.auth().currentUser.uid;
     const querySnapshot = await getDocs(collection(db, "users", id, "schedule"));
@@ -241,4 +262,4 @@ class Calendar extends Component {
   }
 }
 
-export default withRouter(Calendar);
+export default User
