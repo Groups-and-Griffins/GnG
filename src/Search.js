@@ -31,7 +31,7 @@ export default function Search() {
             let div = document.createElement('div');
             div.id=String(doc.data().userID);
             div.className = "searchResultContainer";
-            div.innerHTML =  `<span class = "searchResult" >${doc.data().username}</span>`;
+            div.innerHTML =  `<span id = '${doc.data().username}' class = "searchResult" >${doc.data().username}</span>`;
             e.appendChild(div);
             }
             else {
@@ -51,7 +51,7 @@ export default function Search() {
             e.appendChild(div);
         }
 
-        const searchResults = document.getElementsByClassName('searchResultContainer');
+        const searchResults = document.getElementsByClassName('searchResult');
 
         for (const result of searchResults) {
             result.addEventListener('click', function clickUser() {

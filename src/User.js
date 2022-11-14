@@ -52,11 +52,16 @@ class User extends Component {
     const Userid = array[4];
     const myList = [];
 
-    var id = array[4];
+    var username = array[4];
+    const usersRef = collection(db, "users");
+    const q1 = query(usersRef, where("username", "==", username));
+    const querySnapshot1 = await getDocs(q1);
+    var id;
+    querySnapshot1.forEach((doc) => {
+      id = doc.data().userID;
+    });
     const querySnapshot = await getDocs(collection(db, "users", id, "schedule"));
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      // console.log(doc.id, " => ", doc.data());
       const event = doc.data();
       myList.push(event);
     });
@@ -65,13 +70,9 @@ class User extends Component {
     const startDate = "2022-11-14";
     this.calendar.update({startDate, events});
 
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, where("userID", "==", id));
-    const querySnapshot2 = await getDocs(q);
-    querySnapshot2.forEach((doc) => { 
-      var e = document.getElementById("myDiv");
-      e.innerHTML = "User: " + doc.data().username;
-    })
+    var e = document.getElementById("myDiv");
+    e.innerHTML = "Search Result: " + username;
+
   }
 
   goHome() {
@@ -109,7 +110,7 @@ class User extends Component {
               </div>
               <div className="d-flex align-items-center">
                 <Button onClick={this.goHome} className="w-50 mt-4 mx-auto" type="button">
-                  Submit
+                  Back to Search
                 </Button>
               </div>
             </div>
