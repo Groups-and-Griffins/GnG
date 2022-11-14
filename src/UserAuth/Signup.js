@@ -1,7 +1,7 @@
 import React, { Component, useState, useRef} from "react";
 import { Card, Button, Form, Alert, Container } from "react-bootstrap"
 import { useAuth } from "./AuthContext";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import fire from './config/fire';
 import {db} from './config/fire';
 import {collection, addDoc, setDoc, doc} from 'firebase/firestore';
@@ -53,7 +53,7 @@ export default function Signup() {
               console.log("Document has been added successfully");
             })
             .catch(error => { console.log(error); })
-            navigate("/CreateProfile")
+            navigate("/CreateProfile");
           });
       } catch {
           setError('Failed to create an account');

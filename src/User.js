@@ -1,3 +1,17 @@
+// import React from 'react';
+// import { useParams } from 'react-router-dom';
+
+// export default function User() {
+//   let { id } = useParams();
+//   return (
+//     <>
+//     <div>UserProfile</div>
+//     <div>
+//       <h3>ID: {id}</h3>
+//     </div>
+//     </>
+//   )
+// }
 import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import { Form, Button, Card, Alert, Container, InputGroup } from "react-bootstrap"
@@ -7,7 +21,7 @@ import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
-
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const styles = {
   wrap: {
@@ -21,9 +35,14 @@ const styles = {
   }
 };
 
-class Calendar extends Component {
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
+
+class User extends Component {
   constructor(props) {
     super(props);
+    this.searchedUserID = useSearchParams()[0]();
     this.goHome = this.goHome.bind(this);
     this.calendarRef = React.createRef();
     this.state = {
@@ -182,6 +201,8 @@ class Calendar extends Component {
   }
 
   async componentDidMount() {
+    const Userid = this.props.match.params;
+    console.log(Userid);
     const myList = [];
     var id = fire.auth().currentUser.uid;
     const querySnapshot = await getDocs(collection(db, "users", id, "schedule"));
@@ -192,123 +213,13 @@ class Calendar extends Component {
       myList.push(event);
     });
 
-
     const events = myList
     const startDate = "2022-11-14";
- d0c0889b8eac02ed47a280e68e011635191019cc
     this.calendar.update({startDate, events});
   }
 
   goHome() {
     this.props.navigate('/dashboard')
-  }
-
-  //insert dates into the database
-  insertDatesIntoDatabase(startDate, endDate, startTime, endTime, days, startIndexOfDay, startID, color){
-    //startDate and EndDate are strings that need the date in the format of year-month-day
-    //startIndexOfDay IS SUPER IMPORTANT, TELLS COMPUTER WHAT INDEX OF THE DAYS ARRAY IS THE START
-    //this compares the dates like so 20221023 < 20221024
-    if(parseInt(startDate) < parseInt(endDate)){
-      //assuming military time
-      if(parseInt(startTime) < parseInt(endTime)){
-        //assuming at least one 1 in the array of days
-        //IGNORING LEAP YEARS
-        let startYear = parseInt(startDate.substring(0,5));
-        let endYear = parseInt(endDate.substring(0,5));
-        //assuming months are always 2 numbers
-        let startMonth =  parseInt(startDate.substring(5,7));
-        let endMonth = parseInt(endDate.substring(5,7));
-        //assuming days are always 2 numbers
-        let startDay =  parseInt(startDate.substring(7,9));
-        let endDay = parseInt(endDate.substring(7,9));
-        //counter variables
-        let yearCount = startYear;
-        let monthCount = startMonth;
-        let dayCount = startDay;
-        let currentIndex = startIndexOfDay;
-
-        for(; yearCount <= endYear; yearCount++){
-          for(; monthCount <= endMonth; monthCount++){
-            if(monthCount > 12){
-              break;
-            }
-            //this loop should only activate if the month is equal to end month
-            if(monthCount == endMonth){
-              for(; dayCount <= endDay; dayCount++){
-                if(days[currentIndex] == 1){
-                  //ADD ITEM TO DATABASE
-                  const newString = "" + yearCount + "-" + monthCount + "-" + dayCount;
-                  const event = [
-                    {
-                      id: startID,
-                      text: "Event "+startID,
-                      start: ""+newString+"T"+startTime,
-                      end: ""+newString+"T"+endTime,
-                      backColor: color
-                    }
-                  ];
-                }
-                currentIndex++;
-                if(currentIndex > days.length){
-                  currentIndex = 0;
-                }
-              }
-            }else{
-              //if the month count doesn't equal end month all days must be included
-              if(monthCount == 2){
-                //febuary
-                let maxMonth = 28;
-                for(; dayCount <= maxMonth; dayCount++){
-                  if(days[currentIndex] == 1){
-                    //ADD ITEM TO DATABASE
-                  }
-                  currentIndex++;
-                  if(currentIndex > days.length){
-                    currentIndex = 0;
-                  }
-                }
-              }else if(monthCount == 4 || monthCount == 6 || monthCount == 9 || monthCount == 11){
-                //april, june, sep, or nov
-                let maxMonth = 30;
-                for(; dayCount <= maxMonth; dayCount++){
-                  if(days[currentIndex] == 1){
-                    //ADD ITEM TO DATABASE
-                  }
-                  currentIndex++;
-                  if(currentIndex > days.length){
-                    currentIndex = 0;
-                  }
-                  
-                }
-              }else{
-                //every other month
-                let maxMonth = 31;
-                for(; dayCount <= maxMonth; dayCount++){
-                  if(days[currentIndex] == 1){
-                    //ADD ITEM TO DATABASE
-                  }
-                  currentIndex++;
-                  if(currentIndex > days.length){
-                    currentIndex = 0;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }else{
-        return "ERROR: Times are wrong";
-      }
-
-    }else{
-      return "ERROR: Dates are wrong";
-    }
-
-  }
-
-  //export information out of the database
-  exportDatesOutOfDatabase() {
-    
   }
 
   render() {
@@ -352,4 +263,4 @@ class Calendar extends Component {
   }
 }
 
-export default withRouter(Calendar);
+export default User
