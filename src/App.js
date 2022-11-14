@@ -1,44 +1,62 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { AuthProvider } from "./AuthContext";
+import { AuthProvider } from "./UserAuth/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Signup from "./Signup";
+import Signup from "./UserAuth/Signup";
 import Dashboard from "./Dashboard";
-import Login from "./Login";
-import CreateProfile from "./CreateProfile";
+import Login from "./UserAuth/Login";
+import CreateProfile from "./UserAuth/CreateProfile";
 import PrivateRoute from './PrivateRoute';
-import Alex from './Alex';
-import HelloWorld from './helloWorld'
-import HelloGriffins from './helloGriffins';
-import Update from './update';
-import PlayerPage from './playerPage'
+import Alex from './4800Activities/Alex';
+import HelloWorld from './4800Activities/helloWorld'
+import HelloGriffins from './4800Activities/helloGriffins';
+import Update from './4800Activities/update';
+import PlayerPage from './4800Activities/playerPage'
 import Calendar from "./Calendar";
+import Home from "./Home";
+import Search from "./Search";
+import Team from "./Team";
 
-function App() {
+export default function App() {
   return (
-    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+    // <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
       <div className="w-100" style={{  }}>
         <Router>
           <AuthProvider>
             <Routes>
-            <Route exact path='/' element={
+            {/* <Route exact path='/' element={
               <PrivateRoute>
-                <Dashboard />
+                <Home />
               </PrivateRoute>
               }>
-              <Route exact path='/home' element={
+            </Route> */}
+              <Route exact path='/dashboard' element={
                 <PrivateRoute>
                   <Dashboard />
                 </PrivateRoute>
               }>
               </Route>
-            </Route>
+
             <Route exact path='/createprofile' element={
                 <PrivateRoute>
                   <CreateProfile />
                 </PrivateRoute>
               }>
               </Route>
+              <Route exact path='/calendar' element={
+                <PrivateRoute>
+                  <Calendar />
+                </PrivateRoute>
+              }>
+              </Route>
+              <Route exact path='/team' element={
+                <PrivateRoute>
+                  <Team />
+                </PrivateRoute>
+              }>
+              </Route>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/Alex" element={<Alex />} />
@@ -47,12 +65,11 @@ function App() {
             <Route path="/update" element={<Update />} />
             <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/search" element={<Search />} />
             </Routes>
           </AuthProvider>
         </Router>
       </div>
-    </Container>
+    // </Container>
   )
 }
-
-export default App

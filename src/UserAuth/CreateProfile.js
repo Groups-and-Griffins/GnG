@@ -3,39 +3,49 @@ import { Card, Button, Form, Alert, Container } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import fire from './config/fire';
 import {db} from './config/fire';
-import {collection, updateDoc, setDoc, doc} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, where, query, getDocs} from 'firebase/firestore';
 
 export default function CreateProfile() {
     let navigate = useNavigate();
     const [error, setError] = useState('');
     const realNameRef = useRef();
     const userNameRef = useRef();
+    const ageRef = useRef();
     const playerRoleRef = useRef();
     const [loading, setLoading] = useState(false)
     
     async function handleSubmit(e) {
         e.preventDefault()
 
-        console.log(realNameRef.current.value);
-        console.log(userNameRef.current.value);
-        console.log(playerRoleRef.current.value);
+        // console.log(realNameRef.current.value);
+        // console.log(userNameRef.current.value);
+        // console.log(playerRoleRef.current.value);
+    
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("username", "==", userNameRef.current.value));
+        const querySnapshot = await getDocs(q);
 
-        var id = fire.auth().currentUser.uid;
-        const userRef = collection(db, 'users');
-        const docRef = doc(db, 'users', id);
+        if(querySnapshot.empty) {
+            var id = fire.auth().currentUser.uid;
+            const userRef = collection(db, 'users');
+            const docRef = doc(db, 'users', id);
 
-        const data = {
-            name: realNameRef.current.value,
-            username: userNameRef.current.value,
-            playerRole: playerRoleRef.current.value
-        };
-        updateDoc(docRef, data)
-        .then(docRef => { 
-            console.log("A New Document Field has been added to an existing document"); })
-        .catch(error => { console.log(error); })
-        setLoading(false);
-        navigate("/home")
+            const data = {
+                name: realNameRef.current.value,
+                username: userNameRef.current.value,
+                playerRole: playerRoleRef.current.value,
+                age: ageRef.current.value
+            };
+            updateDoc(docRef, data)
+            .then(docRef => { 
+                console.log("A New Document Field has been added to an existing document"); })
+            .catch(error => { console.log(error); })
+            setLoading(false);
+            navigate("/dashboard");
         }
+        else
+            return setError("Username already exists");
+    }
     return (
         <>
             <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
@@ -52,6 +62,10 @@ export default function CreateProfile() {
                                 <Form.Group id="username">
                                     <Form.Label>Username</Form.Label>
                                     <Form.Control type="text" ref={userNameRef} required />
+                                </Form.Group>
+                                <Form.Group id="age">
+                                    <Form.Label>Age</Form.Label>
+                                    <Form.Control type="number" min="0" ref={ageRef} required />
                                 </Form.Group>
                                 <Form.Group id="dndRole">
                                     <Form.Label>Dnd Role</Form.Label>

@@ -10,13 +10,13 @@ export function AuthProvider( { children}) {
     const [currentUser, setCurrentUser] = useState();
     const [loading, setLoading] = useState(true);
 
-    function signup(email, password) {
-        return fire.auth().createUserWithEmailAndPassword(email, password)
-    };
+    // function signup(email, password) {
+    //     return fire.auth().createUserWithEmailAndPassword(email, password)
+    // };
 
-    function login(email, password) {
-        return fire.auth().signInWithEmailAndPassword(email, password)
-    }
+    // function login(email, password) {
+    //     return fire.auth().signInWithEmailAndPassword(email, password)
+    // }
     
     function logout() {
         return fire.auth().signOut()
@@ -34,8 +34,8 @@ export function AuthProvider( { children}) {
 
     const value = {
         currentUser,
-        signup,
-        login,
+        // signup,
+        // login,
         logout
     }
     return (

@@ -1,9 +1,11 @@
 import React, { useState } from "react"
 import { Card, Button, Alert, Container } from "react-bootstrap"
-import { useAuth } from "./AuthContext"
+import { useAuth } from "./UserAuth/AuthContext";
 import { Link, useNavigate } from "react-router-dom"
-import {db} from './config/fire';
+import {db} from './UserAuth/config/fire';
 import {collection, addDoc} from 'firebase/firestore';
+
+import SideNavBar from "./SideNavBar";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -22,7 +24,7 @@ export default function Dashboard() {
 
     try {
       await logout()
-      navigate("/login")
+      navigate("/home")
     } catch {
       setError("Failed to log out")
     }
@@ -30,6 +32,12 @@ export default function Dashboard() {
 
   return (
     <>
+    <SideNavBar/>
+    <header className="custom_navbar">
+        <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
+          Profile
+        </span>
+      </header>
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
         <div className="w-100" style={{ maxWidth: "400px" }}>
           <Card>
@@ -43,9 +51,10 @@ export default function Dashboard() {
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            <Button variant="link" onClick={handleLogout}>
+            <Button variant="link" onClick={handleLogout} style = {{color:"#F0F8FF"}} >
               Log Out
             </Button>
+           
           </div>
         </div>
     </Container>

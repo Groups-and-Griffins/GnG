@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
+
+body {
+  /* background: #accce9 !important; */
+  background: linear-gradient(to right, #A40606, #D98324);
+  min-height: 100vh;
+  font-weight: 400;
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.searchResultContainer {
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.searchResult {
+  background-color: #FFF;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  padding-left: 50px;
+  padding-right: 50px;
+  cursor: pointer;
+}
+.searchResult:hover {
+  background-color: #bdbcbc;
+}
+
+.noSearchResult {
+  background-color: #FFF;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  padding-left: 50px;
+  padding-right: 50px;
+}
