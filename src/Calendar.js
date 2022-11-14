@@ -1,11 +1,11 @@
 import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
-import { Form, Button, Card, Alert, Container } from "react-bootstrap"
+import { Form, Button, Card, Alert, Container, InputGroup } from "react-bootstrap"
 import { withRouter } from './withRouter';
 import "./CalendarStyles.css";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
-import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
 
 
@@ -197,7 +197,17 @@ class Calendar extends Component {
     const startDate = "2022-11-14";
  d0c0889b8eac02ed47a280e68e011635191019cc
     this.calendar.update({startDate, events});
-  }
+
+      
+  const usersRef = collection(db, "users");
+  const q = query(usersRef, where("userID", "==", fire.auth().currentUser.uid));
+  const querySnapshot2 = await getDocs(q);
+  querySnapshot2.forEach((doc) => {
+    console.log(doc.data().username);
+    var e = document.getElementById("myDiv");
+    e.innerHTML = "Welcome, " + doc.data().username;
+  })
+}
 
   goHome() {
     this.props.navigate('/dashboard')
@@ -314,39 +324,43 @@ class Calendar extends Component {
   render() {
     return (
       <>
-      <header className="custom_navbar">
-        <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
-          Welcome
-        </span>
-      </header>
-      <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-          <SideNavBar />
-          <div>
-            <div style={styles.wrap}>
-              <div style={styles.left}>
-                <DayPilotNavigator
-                  selectMode={"week"}
-                  startDate={"2022-11-14"}
-                  selectionDay={"2022-11-14"}
-                  onTimeRangeSelected={args => {
-                    this.calendar.update({
-                      startDate: args.day
-                    });
-                  } } />
+        <header className="custom_navbar">
+          <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
+            Welcome
+          </span>
+        </header>
+        <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+            <SideNavBar />
+            <div>
+              <div style={styles.wrap}>
+                <div style={styles.left}>
+                  <DayPilotNavigator
+                    selectMode={"week"}
+                    startDate={"2022-11-14"}
+                    selectionDay={"2022-11-14"}
+                    onTimeRangeSelected={args => {
+                      this.calendar.update({
+                        startDate: args.day
+                      });
+                    }} />
+                </div>
+                <div style={styles.main}>
+                  <DayPilotCalendar
+                    {...this.state}
+                    ref={this.calendarRef} />
+                </div>
               </div>
-              <div style={styles.main}>
-                <DayPilotCalendar
-                  {...this.state}
-                  ref={this.calendarRef} />
+              <div className="d-flex align-items-center">
+                <Button onClick={this.goHome} className="w-50 mt-4 mx-auto" type="button">
+                  Submit
+                </Button>
               </div>
             </div>
-            <Form onClick={this.goHome} className="d-flex align-items-center">
-              <Button className="w-50 mt-4 mx-auto" type="button">
-                Submit
-              </Button>
-            </Form>
-          </div>
-        </Container></>
+              {/* <div>
+                <h3>ID: {this.props.dataFromParent}</h3>
+              </div> */}
+          </Container>
+      </>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "./UserAuth/AuthContext";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import Signup from "./UserAuth/Signup";
 import Dashboard from "./Dashboard";
 import Login from "./UserAuth/Login";
@@ -16,8 +16,10 @@ import Calendar from "./Calendar";
 import Home from "./Home";
 import Search from "./Search";
 import Team from "./Team";
+import User from "./User";
 
 export default function App() {
+  var id;
   return (
     // <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
       <div className="w-100" style={{  }}>
@@ -55,6 +57,7 @@ export default function App() {
                 </PrivateRoute>
               }>
               </Route>
+              
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -66,6 +69,7 @@ export default function App() {
             <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/user/:id" element={<User/>}/>
             </Routes>
           </AuthProvider>
         </Router>
