@@ -242,9 +242,9 @@ class Calendar extends Component {
                 </div>
               </div>
               <div className="d-flex align-items-center">
-                <Button onClick={this.goHome} className="w-50 mt-4 mx-auto" type="button">
+                {/* <Button onClick={this.goHome} className="w-50 mt-4 mx-auto" type="button">
                   Submit
-                </Button>
+                </Button> */}
               </div>
             </div>
               {/* <div>
