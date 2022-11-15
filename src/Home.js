@@ -66,13 +66,12 @@ export default function Home() {
                   <div className="col-lg-5 col-md-6">
                     <div className="slider_detail-box">
                       <h1>
-                        Start <br />
-                        Business with <br />
-                        Our Company
+                        Start scheduling<br />
+                        your dnd <br />
+                        ADVENTURE!
                       </h1>
                       <p>
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud exercitation ullamco laboris nisi
+                        Groups and Griffins is working hard to make scheduling your DND group is a better experience for both Dungeon Masters and players
                       </p>
                       {/* <div className="btn-box">
                         <a href className="btn-1">
