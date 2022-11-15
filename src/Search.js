@@ -9,6 +9,7 @@ import { withRouter } from "./withRouter";
 import User from "./User";
 import fire from './UserAuth/config/fire';
 
+var myID;
 export default function Search() {
     let navigate = useNavigate();
     const searchRef = useRef();
@@ -29,6 +30,7 @@ export default function Search() {
         querySnapshot.forEach((doc) => {
             if (doc.data().userID !== fire.auth().currentUser.uid) {
             let div = document.createElement('div');
+            myID = doc.data().userID;
             div.id=String(doc.data().userID);
             div.className = "searchResultContainer";
             div.innerHTML =  `<span id = '${doc.data().username}' class = "searchResult" >${doc.data().username}</span>`;
@@ -92,6 +94,6 @@ export default function Search() {
     )
 }
 
-export const id = '59f781ee-b906-3c7a-e471-ee72aedca51c'
+export var myID;
 
   

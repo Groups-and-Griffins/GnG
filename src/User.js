@@ -9,6 +9,7 @@ import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, o
 import SideNavBar from './SideNavBar';
 import { useParams, useLocation } from 'react-router-dom';
 import Search from './Search';
+import {myID} from './Search';
 
 const styles = {
   wrap: {
@@ -46,33 +47,39 @@ class User extends Component {
   }
 
   async componentDidMount() {
-    // let { Userid } = useParams();
-    const str = window.location.href;
-    var array = str.split("/");
-    const Userid = array[4];
-    const myList = [];
+    if (myID == null) {
+      console.log("isNull");
+      this.goHome();
+    }
+    else {
+      // console.log(myID);
+      // const str = window.location.href;
+      // var array = str.split("/");
+      // const Userid = array[4];
+      const myList = [];
 
-    var username = array[4];
-    const usersRef = collection(db, "users");
-    const q1 = query(usersRef, where("username", "==", username));
-    const querySnapshot1 = await getDocs(q1);
-    var id;
-    querySnapshot1.forEach((doc) => {
-      id = doc.data().userID;
-    });
-    const querySnapshot = await getDocs(collection(db, "users", id, "schedule"));
-    querySnapshot.forEach((doc) => {
-      const event = doc.data();
-      myList.push(event);
-    });
+      // var username = array[4];
+      // const usersRef = collection(db, "users");
+      // const q1 = query(usersRef, where("username", "==", username));
+      // const querySnapshot1 = await getDocs(q1);
+      // var id;
+      // querySnapshot1.forEach((doc) => {
+      //   id = doc.data().userID;
+      // });
+      const querySnapshot = await getDocs(collection(db, "users", myID, "schedule"));
+      querySnapshot.forEach((doc) => {
+        const event = doc.data();
+        myList.push(event);
+      });
 
-    const events = myList
-    const startDate = "2022-11-14";
-    this.calendar.update({startDate, events});
+      const events = myList
+      const startDate = "2022-11-14";
+      this.calendar.update({startDate, events});
 
-    var e = document.getElementById("myDiv");
-    e.innerHTML = "Search Result: " + username;
+      var e = document.getElementById("myDiv");
+      //e.innerHTML = "Search Result: " + username;
 
+    }
   }
 
   goHome() {
