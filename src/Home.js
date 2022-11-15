@@ -110,7 +110,7 @@ export default function Home() {
                   </div>
                   <div className="col-md-6">
                     <div className="slider_img-box">
-                      <img src="assets/images/griffin_logo.png" alt="" />
+                      <img src="assets/images/griffinLeft_logo.png" height="320"  width="320" />
                     </div>
                   </div>
                 </div>
