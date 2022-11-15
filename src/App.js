@@ -17,6 +17,7 @@ import Home from "./Home";
 import Search from "./Search";
 import Team from "./Team";
 import User from "./User";
+import JoinTeam from "./JoinTeam";
 
 export default function App() {
   var id;
@@ -69,6 +70,7 @@ export default function App() {
             <Route path="/playerPage" element={<PlayerPage />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/joinTeam" element={<JoinTeam />} />
             <Route path="/user/:id" element={<User/>}/>
             </Routes>
           </AuthProvider>
