@@ -95,12 +95,11 @@ export default function Home() {
                     <div className="slider_detail-box">
                       <h1>
                         Start <br />
-                        Business with <br />
-                        Our Company
+                        Organizing <br />
+                        Your Campaign
                       </h1>
                       <p>
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud exercitation ullamco laboris nisi
+                        Organizing consistant gatherings for your group can be hard, but we're here to try and help!
                       </p>
                       {/* <div className="btn-box">
                         <a href className="btn-1">
