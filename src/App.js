@@ -18,6 +18,7 @@ import Search from "./Search";
 import Team from "./Team";
 import User from "./User";
 import JoinTeam from "./JoinTeam";
+import CreateTeam from "./CreateTeam";
 
 export default function App() {
   var id;
@@ -71,6 +72,7 @@ export default function App() {
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/search" element={<Search />} />
             <Route path="/joinTeam" element={<JoinTeam />} />
+            <Route path="/createTeam" element={<CreateTeam />} />
             <Route path="/user/:id" element={<User/>}/>
             </Routes>
           </AuthProvider>
