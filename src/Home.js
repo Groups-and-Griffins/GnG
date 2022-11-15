@@ -28,12 +28,6 @@ export default function Home() {
                         <a className="nav-link" href="about.html">About </a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="service.html">Services </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="contact.html">Contact</a>
-                      </li>
-                      <li className="nav-item">
                         <a className="nav-link" href="/login"> Login</a>
                       </li>
                       <li className="nav-item">
@@ -168,7 +162,8 @@ export default function Home() {
         </div>
         <div className="layout_padding2">
           <div className="img-box">
-            <img src="assets/images/welcome.png" alt="" />
+          {/* insert copyright free image later? */}
+            <img src="" alt="" />
           </div>
           <div className="detail-box">
             <p>
@@ -199,16 +194,15 @@ export default function Home() {
             </div>
             <div className="detail-box">
               <h4>
-                Business <br />
-                Consultant
+                Organize <br />
+                Help
               </h4>
               <p>
-                have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                slightly believable. If you are
+                Our schedule system is desined to help you schedule your DnD group!
               </p>
             </div>
           </div>
-          <div className="service_box">
+          {/* <div className="service_box">
             <div className="img-box">
               <img src="assets/images/s-2.jpg" alt="" />
             </div>
@@ -222,19 +216,18 @@ export default function Home() {
                 slightly believable. If you are
               </p>
             </div>
-          </div>
+          </div> */}
           <div className="service_box">
             <div className="img-box">
               <img src="assets/images/s-3.jpg" alt="" />
             </div>
             <div className="detail-box">
               <h4>
-                Financial <br />
+                Gathering <br />
                 Planning
               </h4>
               <p>
-                have suffered alteration in some form, by injected humour, or randomised words which don't look even
-                slightly believable. If you are
+                We allow easy ways for Dungeon Masters to search for potential players and make their ideal campaign. We also help make ways for players to advertize their availability to join a potential campaign.
               </p>
             </div>
           </div>
@@ -252,17 +245,16 @@ export default function Home() {
       <div className="container">
         <div className="custom_heading-container">
           <h2>
-            Do you have any business problem ?
+            Do you have any problem scheduling your DnD group ?
           </h2>
         </div>
         <div className="layout_padding2">
           <div className="img-box">
-            <img src="assets/images/problem.jpg" alt="" />
+            <img src="assets/images/griffins.png" height="320"  width="640"  />
           </div>
           <div className="detail-box">
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in
-              some form, by injected humour, or randomised words which don't look even slightly believable. I
+              Scheduling can be very difficult, especially if you want to create a DnD party with people in different time zones or areas. We are working to help solve that peoblem!
             </p>
             {/* <div>
               <a href>
@@ -279,13 +271,12 @@ export default function Home() {
       <div className="container">
         <div className="custom_heading-container">
           <h2>
-            Why Choose Us
+            Why Choose Us ?
           </h2>
         </div>
         <div className="content-container">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis
+            We are working to help solve this problem.
           </p>
           <div className="row">
             <div className="col-md-3 col-sm-6">
@@ -297,7 +288,7 @@ export default function Home() {
                   99%
                 </h3>
                 <h6>
-                  SATISFIED CLIENTS
+                  SATISFIED CLIENTS SO FAR!
                 </h6>
               </div>
             </div>
@@ -307,10 +298,10 @@ export default function Home() {
               </div>
               <div className="detail-box">
                 <h3>
-                  4700+
+                  CAN RUN ON ANY DEVICE
                 </h3>
                 <h6>
-                  AWESOME planing
+                for AWESOME planing
                 </h6>
               </div>
             </div>
@@ -320,23 +311,10 @@ export default function Home() {
               </div>
               <div className="detail-box">
                 <h3>
-                  4500+
+                  MORE THAN 1
                 </h3>
                 <h6>
                   CLIENTS
-                </h6>
-              </div>
-            </div>
-            <div className="col-md-3 col-sm-6">
-              <div className="img-box">
-                <img src="assets/images/bar-chart.png" alt="" />
-              </div>
-              <div className="detail-box">
-                <h3>
-                  19000+
-                </h3>
-                <h6>
-                  DAILY business
                 </h6>
               </div>
             </div>
@@ -346,101 +324,104 @@ export default function Home() {
     </section>
     {/* end why section */}
     {/* client section */}
-    <section className="client_section layout_padding">
-      <div className="container">
-        <h2>
-          What Our Clients Says
-        </h2>
-        <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <div className="client_container layout_padding2">
-                <div className="client_text">
-                  <p>
-                    psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                  </p>
-                </div>
-                <div className="detail-box">
-                  <div className="img-box">
-                    <img src="assets/images/client.png" alt="" />
-                  </div>
-                  <div className="name">
-                    <h5>
-                      Joans Mark
-                    </h5>
-                    <p>
-                      cal
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="carousel-item">
-              <div className="client_container layout_padding2">
-                <div className="client_text">
-                  <p>
-                    psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                  </p>
-                </div>
-                <div className="detail-box">
-                  <div className="img-box">
-                    <img src="assets/images/client.png" alt="" />
-                  </div>
-                  <div className="name">
-                    <h5>
-                      Joans Mark
-                    </h5>
-                    <p>
-                      cal
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="carousel-item">
-              <div className="client_container layout_padding2">
-                <div className="client_text">
-                  <p>
-                    psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                  </p>
-                </div>
-                <div className="detail-box">
-                  <div className="img-box">
-                    <img src="assets/images/client.png" alt="" />
-                  </div>
-                  <div className="name">
-                    <h5>
-                      Joans Mark
-                    </h5>
-                    <p>
-                      cal
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    {/*  // <section className="client_section layout_padding">
+    //   <div className="container">
+    //     <h2>
+    //       What Our Clients Says
+    //     </h2>
+    //     <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
+    //       <div className="carousel-inner">
+    //         <div className="carousel-item active">
+    //           <div className="client_container layout_padding2">
+    //             <div className="client_text">
+    //               <p>
+    //                 psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    //                 magna
+    //                 aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+    //                 commodo
+    //                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+    //               </p>
+    //             </div>
+    //             <div className="detail-box">
+    //               <div className="img-box">
+    //                 <img src="assets/images/client.png" alt="" />
+    //               </div>
+    //               <div className="name">
+    //                 <h5>
+    //                   Joans Mark
+    //                 </h5>
+    //                 <p>
+    //                   cal
+    //                 </p>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //         <div className="carousel-item">
+    //           <div className="client_container layout_padding2">
+    //             <div className="client_text">
+    //               <p>
+    //                 psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    //                 magna
+    //                 aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+    //                 commodo
+    //                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+    //               </p>
+    //             </div>
+    //             <div className="detail-box">
+    //               <div className="img-box">
+    //                 <img src="assets/images/client.png" alt="" />
+    //               </div>
+    //               <div className="name">
+    //                 <h5>
+    //                   Joans Mark
+    //                 </h5>
+    //                 <p>
+    //                   cal
+    //                 </p>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //         <div className="carousel-item">
+    //           <div className="client_container layout_padding2">
+    //             <div className="client_text">
+    //               <p>
+    //                 psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    //                 magna
+    //                 aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+    //                 commodo
+    //                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+    //               </p>
+    //             </div>
+    //             <div className="detail-box">
+    //               <div className="img-box">
+    //                 <img src="assets/images/client.png" alt="" />
+    //               </div>
+    //               <div className="name">
+    //                 <h5>
+    //                   Joans Mark
+    //                 </h5>
+    //                 <p>
+    //                   cal
+    //                 </p>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+   
+          { <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span className="sr-only">Previous</span>
           </a>
           <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
             <span className="sr-only">Next</span>
-          </a> */}
-        </div>
-      </div>
-    </section>
+          </a> }
+    //     </div>
+    //   </div>
+    // </section>
+  */ }
+
     {/* end client section */}
     {/* contact section */}
     <section className="contact_section layout_padding">
@@ -449,7 +430,7 @@ export default function Home() {
           Contact Us
         </h2>
         <p>
-          psum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          We will try to get back to you as soon as we can!
         </p>
       </div>
       <div className="container">
