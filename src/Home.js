@@ -67,7 +67,7 @@ export default function Home() {
                     <div className="slider_detail-box">
                       <h1>
                         Start scheduling<br />
-                        your dnd <br />
+                        your DnD <br />
                         ADVENTURE!
                       </h1>
                       <p>
@@ -82,7 +82,7 @@ export default function Home() {
                   </div>
                   <div className="col-md-6">
                     <div className="slider_img-box">
-                      <img src="assets/images/slider-img.png" alt="" />
+                      <img src="assets/images/griffin_logo.png" alt="" />
                     </div>
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export default function Home() {
                   </div>
                   <div className="col-md-6">
                     <div className="slider_img-box">
-                      <img src="assets/images/slider-img.png" alt="" />
+                      <img src="assets/images/griffin_logo.png" alt="" />
                     </div>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function Home() {
                   </div>
                   <div className="col-md-6">
                     <div className="slider_img-box">
-                      <img src="assets/images/slider-img.png" alt="" />
+                      <img src="assets/images/griffin_logo.png" alt="" />
                     </div>
                   </div>
                 </div>
