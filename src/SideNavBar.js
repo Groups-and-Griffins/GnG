@@ -23,7 +23,7 @@ export default function SideNavBar() {
         }
       }
   return (
-<SideNav style={{ background: "#000" }}
+<SideNav style={{ background: "#000", }}
           onSelect={(selected) => {
               switch (selected) {
                   case "home":
@@ -60,49 +60,49 @@ export default function SideNavBar() {
               <SideNav.Nav>
                   <NavItem eventKey="home">
                       <NavIcon>
-                          <FaHome />
+                          <FaHome size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                           Home
                       </NavText>
                   </NavItem>
-                  <NavItem eventKey="search">
+                  <NavItem eventKey="search" >
                       <NavIcon>
-                          <FaSearch />
+                          <FaSearch size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                           Search
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="team">
                       <NavIcon>
-                          <GiSpikedDragonHead />
+                          <GiSpikedDragonHead size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                             My Team
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="friends">
                       <NavIcon>
-                          <FaUserFriends />
+                          <FaUserFriends size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                             Friends
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="profile">
                       <NavIcon>
-                          <FaUser />
+                          <FaUser size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                             Profile
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="logout">
                       <NavIcon>
-                          <MdLogout />
+                          <MdLogout size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                           Logout
                       </NavText>
                   </NavItem>
