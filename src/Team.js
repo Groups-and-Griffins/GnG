@@ -29,7 +29,7 @@ export default function Team() {
     fetchData();
   }, []);
   
-  console.log(playerRole);
+  // console.log(playerRole);
   
   if (playerRole == "Player") {
     document.querySelector('#teamButton').innerText = 'Join a team';

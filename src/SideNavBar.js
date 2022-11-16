@@ -4,8 +4,9 @@ import { useAuth } from "./UserAuth/AuthContext";
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {FaSearch, FaHome, FaUser} from 'react-icons/fa';
+import {FaSearch, FaHome, FaUser, FaUserFriends} from 'react-icons/fa';
 import {MdLogout, MdOutlineGroup} from 'react-icons/md';
+import {GiSpikedDragonHead} from 'react-icons/gi';
 
 export default function SideNavBar() {
     const navigate = useNavigate();
@@ -34,12 +35,15 @@ export default function SideNavBar() {
                 case "team":
                     navigate("/team");
                     break;
-                  case "profile":
-                      navigate("/dashboard");
-                      break;
-                  case "logout":
-                      handleLogout();
-                      break;
+                case "friends":
+                    navigate("/friends");
+                    break;
+                case "profile":
+                    navigate("/dashboard");
+                    break;
+                case "logout":
+                    handleLogout();
+                    break;
               }
           } }
           onToggle={() => {
@@ -72,10 +76,18 @@ export default function SideNavBar() {
                   </NavItem>
                   <NavItem eventKey="team">
                       <NavIcon>
-                          <MdOutlineGroup />
+                          <GiSpikedDragonHead />
                       </NavIcon>
                       <NavText>
-                          Team
+                            My Team
+                      </NavText>
+                  </NavItem>
+                  <NavItem eventKey="friends">
+                      <NavIcon>
+                          <FaUserFriends />
+                      </NavIcon>
+                      <NavText>
+                            Friends
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="profile">
@@ -83,7 +95,7 @@ export default function SideNavBar() {
                           <FaUser />
                       </NavIcon>
                       <NavText>
-                          Profile
+                            Profile
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="logout">

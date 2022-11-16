@@ -7,9 +7,11 @@ import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
-import { useParams, useLocation } from 'react-router-dom';
 import Search from './Search';
 import {myID} from './Search';
+import {AiFillPlusCircle, AiFillCheckCircle} from 'react-icons/ai';
+import {TbUserPlus} from 'react-icons/tb';
+
 
 const styles = {
   wrap: {
@@ -47,38 +49,39 @@ class User extends Component {
   }
 
   async componentDidMount() {
-    if (myID == null) {
+    if (myID != null) {
       console.log("isNull");
-      this.goHome();
+      //this.goHome();
     }
     else {
       // console.log(myID);
       // const str = window.location.href;
       // var array = str.split("/");
       // const Userid = array[4];
+      // var username = array[4];
       const myList = [];
 
-      // var username = array[4];
       // const usersRef = collection(db, "users");
-      // const q1 = query(usersRef, where("username", "==", username));
+      // const q1 = query(usersRef, where("userID", "==", myID));
       // const querySnapshot1 = await getDocs(q1);
-      // var id;
+      // var username, name;
       // querySnapshot1.forEach((doc) => {
-      //   id = doc.data().userID;
+      //   username = doc.data().username;
+      //   name = doc.data().name;
       // });
-      const querySnapshot = await getDocs(collection(db, "users", myID, "schedule"));
-      querySnapshot.forEach((doc) => {
-        const event = doc.data();
-        myList.push(event);
-      });
+      // const querySnapshot = await getDocs(collection(db, "users", myID, "schedule"));
+      // querySnapshot.forEach((doc) => {
+      //   const event = doc.data();
+      //   myList.push(event);
+      // });
 
-      const events = myList
-      const startDate = "2022-11-14";
-      this.calendar.update({startDate, events});
+      // const events = myList
+      // const startDate = "2022-11-14";
+      // this.calendar.update({startDate, events});
 
-      var e = document.getElementById("myDiv");
-      //e.innerHTML = "Search Result: " + username;
-
+      // var e = document.getElementById("myDiv");
+      // e.innerHTML = "Search Result: " + username;
+      
     }
   }
 
@@ -86,14 +89,37 @@ class User extends Component {
     this.props.navigate('/search')
   }
 
+  async addFriend() {
+    document.getElementById("addFriend").disabled = true;
+    const usersRef = collection(db, "users");
+    const q1 = query(usersRef, where("userID", "==", fire.auth().currentUser.uid));
+    const querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
+      console.log(doc.data().username);
+      //name = doc.data().name;
+    });
+  }
+
   render() {
     return (
       <>
+      <div>
         <header className="custom_navbar">
           <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
             User
           </span>
         </header>
+        <div className="nameDiv">
+          <div className="grid-container">
+            <h1>Michael</h1>
+            <div style={{paddingTop: "8px"}}>
+            <button onClick={this.addFriend} id="addFriend" type="button" className="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><TbUserPlus/> </button>
+            {/* <button id = "disabled" class="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><AiFillCheckCircle/> </button> */}
+            </div>
+          </div>
+          <div className="line"></div>
+        </div>
+      </div>
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
             <SideNavBar />
             <div>
