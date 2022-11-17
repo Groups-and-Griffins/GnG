@@ -83,15 +83,6 @@ body {
   z-index: 100;
 }
 
-.custom_navbar {
-  background-color: #000;
-  width: 100%;
-  padding-bottom: 0.5rem;
-  padding-top: 0.5rem;
-  position: fixed;
-  /* text-align: center; */
-}
-
 .header_section .container-fluid {
   padding-right: 25px;
   padding-left: 25px;

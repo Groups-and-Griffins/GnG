@@ -5,7 +5,7 @@ import { withRouter } from './withRouter';
 import "./CalendarStyles.css";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
-import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
 
 
@@ -216,7 +216,7 @@ class Calendar extends Component {
     return (
       <>
         <header className="custom_navbar">
-          <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
+          <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
             Welcome
           </span>
         </header>

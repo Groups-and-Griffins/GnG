@@ -36,3 +36,57 @@ body {
   padding-left: 50px;
   padding-right: 50px;
 }
+
+.custom_navbar {
+  background-color: #000;
+  width: 100%;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  position: fixed;
+  /* text-align: center; */
+}
+
+.nameDiv {
+  background-color: #FFF;
+  padding-top: 1rem;
+  padding-bottom: 10rem;
+  padding-left: 1rem;
+  padding-right:10rem;
+  position: absolute;
+  margin-top: 4rem;
+  margin-left: 6rem;
+
+  border-radius: 10px;
+
+}
+
+.line{
+  width: 90%;
+  border-bottom: 1px solid black;
+  position: absolute;
+  }
+
+  /* Style buttons */
+.friendBtn {
+  background-color: rgb(3, 183, 3); /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  font-size: 20px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Darker background on mouse-over */
+.friendBtn:hover:enabled {
+  background-color: rgb(42, 117, 42);
+}
+
+.friendBtn:disabled {
+  background-color: rgb(65, 65, 65);
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}

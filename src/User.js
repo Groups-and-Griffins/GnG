@@ -2,13 +2,17 @@ import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import { Form, Button, Card, Alert, Container, InputGroup } from "react-bootstrap"
 import { withRouter } from './withRouter';
+import { Grid } from '@material-ui/core'
 import "./CalendarStyles.css";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
-import { useParams, useLocation } from 'react-router-dom';
 import Search from './Search';
+import {myID} from './Search';
+import {AiFillPlusCircle, AiFillCheckCircle} from 'react-icons/ai';
+import {TbUserPlus} from 'react-icons/tb';
+
 
 const styles = {
   wrap: {
@@ -27,7 +31,7 @@ const styles = {
 class User extends Component {
   constructor(props) {
     super(props);
-    this.goHome = this.goHome.bind(this);
+    this.goBack = this.goBack.bind(this);
     this.calendarRef = React.createRef();
     this.state = {
       viewType: "Week",
@@ -46,49 +50,93 @@ class User extends Component {
   }
 
   async componentDidMount() {
-    // let { Userid } = useParams();
-    const str = window.location.href;
-    var array = str.split("/");
-    const Userid = array[4];
-    const myList = [];
+    if (myID != null) {
+      console.log("isNull");
+      //this.goBack();
+    }
+    else {
+      // console.log(myID);
+      // const str = window.location.href;
+      // var array = str.split("/");
+      // const Userid = array[4];
+      // var username = array[4];
+      const myList = [];
 
-    var username = array[4];
-    const usersRef = collection(db, "users");
-    const q1 = query(usersRef, where("username", "==", username));
-    const querySnapshot1 = await getDocs(q1);
-    var id;
-    querySnapshot1.forEach((doc) => {
-      id = doc.data().userID;
-    });
-    const querySnapshot = await getDocs(collection(db, "users", id, "schedule"));
-    querySnapshot.forEach((doc) => {
-      const event = doc.data();
-      myList.push(event);
-    });
+      //get user info
+      // const usersRef = collection(db, "users");
+      // const q1 = query(usersRef, where("userID", "==", myID));
+      // const querySnapshot1 = await getDocs(q1);
+      // var username, name;
+      // querySnapshot1.forEach((doc) => {
+      //   username = doc.data().username;
+      //   name = doc.data().name;
+      // });
 
-    const events = myList
-    const startDate = "2022-11-14";
-    this.calendar.update({startDate, events});
+      //Get schedule
+      // const querySnapshot = await getDocs(collection(db, "users", myID, "schedule"));
+      // querySnapshot.forEach((doc) => {
+      //   const event = doc.data();
+      //   myList.push(event);
+      // });
 
-    var e = document.getElementById("myDiv");
-    e.innerHTML = "Search Result: " + username;
+      // const events = myList
+      // const startDate = "2022-11-14";
+      // this.calendar.update({startDate, events});
 
+      // var navbar = document.getElementById("myDiv");
+      // navbar.innerHTML = "Search Result: " + username;
+
+      
+      // var nameHeader = document.getElementById("name");
+      // console.log(name);
+      // nameHeader.textContent = name;
+      
+    }
   }
 
-  goHome() {
+  goBack() {
     this.props.navigate('/search')
+  }
+
+  async addFriend() {
+    // document.getElementById("addFriend").disabled = true;
+    // const usersRef = collection(db, "users");
+    // const q1 = query(usersRef, where("userID", "==", fire.auth().currentUser.uid));
+    // const querySnapshot1 = await getDocs(q1);
+    // querySnapshot1.forEach((doc) => {
+    //   console.log(doc.data().username);
+    //   //name = doc.data().name;
+    // });
   }
 
   render() {
     return (
       <>
-        <header className="custom_navbar">
-          <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
-            User
-          </span>
-        </header>
+        <SideNavBar />
+        <div>
+          <header className="custom_navbar">
+            <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
+              Search Result
+            </span>
+          </header>
+          <Grid className="grid-container">
+            <div className="nameDiv">
+              <div className="grid-container">
+                <h1 id = "name">Michael</h1>
+                <div style={{paddingTop: "8px"}}>
+                <button onClick={this.addFriend} id="addFriend" type="button" className="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><TbUserPlus/> </button>
+                {/* <button id = "disabled" class="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><AiFillCheckCircle/> </button> */}
+                </div>
+              </div>
+                <div className="line"></div>
+                  <div >Bio</div>
+                </div>
+            <div>
+              <h1 className='justify-content-center align-items-center' style= {{position: "fixed"}}> Availability</h1>
+            </div>
+          </Grid>
+        </div>
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
-            <SideNavBar />
             <div>
               <div style={styles.wrap}>
                 <div style={styles.left}>
@@ -109,7 +157,7 @@ class User extends Component {
                 </div>
               </div>
               <div className="d-flex align-items-center">
-                <Button onClick={this.goHome} className="w-50 mt-4 mx-auto" type="button">
+                <Button onClick={this.goBack} className="w-50 mt-4 mx-auto" type="button">
                   Back to Search
                 </Button>
               </div>
