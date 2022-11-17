@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import { Form, Button, Card, Alert, Container, InputGroup } from "react-bootstrap"
 import { withRouter } from './withRouter';
-import { Grid } from '@material-ui/core'
+//import { Grid } from '@material-ui/core'
 import "./CalendarStyles.css";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
@@ -119,13 +119,13 @@ class User extends Component {
               Search Result
             </span>
           </header>
-          <Grid className="grid-container">
+          {/* <Grid className="grid-container">
             <div className="nameDiv">
               <div className="grid-container">
                 <h1 id = "name">Michael</h1>
                 <div style={{paddingTop: "8px"}}>
                 <button onClick={this.addFriend} id="addFriend" type="button" className="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><TbUserPlus/> </button>
-                {/* <button id = "disabled" class="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><AiFillCheckCircle/> </button> */}
+                 <button id = "disabled" class="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><AiFillCheckCircle/> </button> 
                 </div>
               </div>
                 <div className="line"></div>
@@ -134,7 +134,7 @@ class User extends Component {
             <div>
               <h1 className='justify-content-center align-items-center' style= {{position: "fixed"}}> Availability</h1>
             </div>
-          </Grid>
+          </Grid> */}
         </div>
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
             <div>
