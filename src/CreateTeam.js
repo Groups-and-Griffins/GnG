@@ -1,4 +1,5 @@
-import React, { Component, useState, useRef} from 'react'
+import React, { Component, useState, useRef, useEffect, useContext} from 'react'
+import SideNavBar from './SideNavBar';
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import { Card, Button, Form, Alert, Container } from "react-bootstrap"
@@ -7,9 +8,28 @@ import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteD
 export default function CreateTeam() {
   const teamNameRef = useRef();
   const teamDescriptionRef = useRef();
+  const [playerEmail, setCurrentEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false)
   let navigate = useNavigate();
+
+  //getting email
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const docRef2 = doc(db, "users", fire.auth().currentUser.uid);
+        const docSnap = await getDoc(docRef2);
+        if (docSnap.exists()) {
+          setCurrentEmail(docSnap.data().email);
+        } else {
+          console.error("can't find user");
+        }
+      } catch(err) {
+        console.error(err);
+      }
+    } 
+    fetchData();
+}, []);
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -28,7 +48,7 @@ export default function CreateTeam() {
     if(querySnapshot.empty) {
       const data = {
         team: teamName,
-        email: "work.com",
+        email: playerEmail,
         description: des
       };
       setDoc(docRef, data)
@@ -44,6 +64,7 @@ export default function CreateTeam() {
   }
   return (
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+    <SideNavBar />
     <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
             <Card.Body>
