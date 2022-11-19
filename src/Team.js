@@ -9,8 +9,8 @@ import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteD
 export default function Team() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
+  const [playerEmail, setCurrentEmail] = useState("");
   const [showElement, setShowElement] = useState(false)
-
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -18,6 +18,7 @@ export default function Team() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setCurrentPlayerRole(docSnap.data().playerRole);
+          setCurrentEmail(docSnap.data().email);
         } else {
           console.error("can't find user");
         }
@@ -27,10 +28,27 @@ export default function Team() {
       setShowElement(true);
     } 
     fetchData();
-  }, []);
-  
+ 
+  const fetchData2 = async() => {
+    try {
+      const usersRef = collection(db, "teams");
+      const q = query(usersRef, where("DMEmail", "==", "patel.vraj1781@gmail.com"));
+      const querySnapshot2 = await getDocs(q);
+      querySnapshot2.forEach((doc) => {
+        console.log(doc.data().DMEmail);
+      })
+    } catch(err) {
+      console.error(err);
+    }
+  }
+  fetchData2();
+}, []);
   // console.log(playerRole);
-  
+  if(playerEmail == "DM"){
+    document.querySelector('#teamButton').innerText = 'Test';
+  }
+
+
   if (playerRole == "Player") {
     document.querySelector('#teamButton').innerText = 'Join a team';
   }
