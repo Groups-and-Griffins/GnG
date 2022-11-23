@@ -52,19 +52,33 @@ body {
   padding-bottom: 10rem;
   padding-left: 1rem;
   padding-right:10rem;
-  position: absolute;
+  position: fixed;
   margin-top: 4rem;
   margin-left: 6rem;
-
   border-radius: 10px;
-
 }
 
+.availability-Div {
+  position: fixed;
+  background-color: rgb(54, 56, 57);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 20rem;
+  padding-right:20rem;
+  border-radius: 10px;
+}
+.availability-line{
+  width: 90%;
+  padding-left: 20rem;
+  padding-right:20rem;
+  border-bottom: 1px solid black;
+  position: absolute;
+}
 .line{
   width: 90%;
   border-bottom: 1px solid black;
   position: absolute;
-  }
+}
 
   /* Style buttons */
 .friendBtn {
@@ -85,8 +99,13 @@ body {
 .friendBtn:disabled {
   background-color: rgb(65, 65, 65);
 }
-.grid-container {
+.grid-container-x {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
+}
+
+.grid-container-y {
+  display: grid;
+  grid-gap: 10rem;
 }
