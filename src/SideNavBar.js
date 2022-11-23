@@ -62,6 +62,8 @@ export default function SideNavBar() {
             //makes boolean true if user is DM of a team
             setDMStatus(true);
           }
+          console.log(playerEmail);
+          console.log(doc.data().DMEmail);
       })
        
     } catch(err) {

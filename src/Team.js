@@ -10,7 +10,8 @@ export default function Team() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
-  const [showElement, setShowElement] = useState(false)
+  const [showElement, setShowElement] = useState(false);
+  const [isTeamDM, setDMStatus] = useState(false);
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -29,20 +30,28 @@ export default function Team() {
     } 
     fetchData();
  
-  const fetchData2 = async() => {
-    try {
-      const usersRef = collection(db, "teams");
-      const q = query(usersRef, where("DMEmail", "==", playerEmail));
-      const querySnapshot2 = await getDocs(q);
-      querySnapshot2.forEach((doc) => {
-        console.log(doc.data().DMEmail);
-      })
-    } catch(err) {
-      console.error(err);
+    const fetchData2 = async() => {
+      try {
+        const usersRef = collection(db, "teams");
+        const q = query(usersRef, where("DMEmail", "==", playerEmail));
+        const querySnapshot2 = await getDocs(q);
+        querySnapshot2.forEach((doc) => {
+          console.log(doc.data().DMEmail);
+          if (playerEmail == doc.data().DMEmail) {
+              //makes boolean true if user is DM of a team
+              setDMStatus(true);
+            }
+            console.log(playerEmail);
+            console.log(doc.data().DMEmail);
+        })
+         
+      } catch(err) {
+        console.error(err);
+      }
     }
-  }
   fetchData2();
 }, []);
+
   // console.log(playerRole);
   if(playerEmail == "DM"){
     document.querySelector('#teamButton').innerText = 'Test';
@@ -52,6 +61,9 @@ export default function Team() {
   if (playerRole == "Player") {
     document.querySelector('#teamButton').innerText = 'Join a team';
   }
+  else if (playerRole == "DM" && isTeamDM) {
+    document.querySelector('#teamButton').innerText = 'See the Team';
+  }
   else if (playerRole == "DM") {
     document.querySelector('#teamButton').innerText = 'Create a team';
   }
@@ -59,7 +71,9 @@ export default function Team() {
   async function handleSubmit(e) {
     if (playerRole == "Player")
       navigate('/joinTeam');
-    else if (playerRole == "DM")
+    else if (playerRole == "DM" && isTeamDM)
+      navigate('/teamView');
+      else if (playerRole == "DM")
       navigate('/createTeam');
 }
   

@@ -19,6 +19,7 @@ import Team from "./Team";
 import User from "./User";
 import JoinTeam from "./JoinTeam";
 import CreateTeam from "./CreateTeam";
+import TeamView from "./TeamView";
 
 export default function App() {
   var id;
