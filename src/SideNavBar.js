@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {FaSearch, FaHome, FaUser} from 'react-icons/fa';
 import {MdLogout, MdOutlineGroup} from 'react-icons/md';
 
+
 export default function SideNavBar() {
     const navigate = useNavigate();
     const { currentUser, logout } = useAuth();

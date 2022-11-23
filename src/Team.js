@@ -9,15 +9,8 @@ import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteD
 export default function Team() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
-<<<<<<< Updated upstream
-  const [showElement, setShowElement] = useState(false)
-
-=======
   const [playerEmail, setCurrentEmail] = useState("");
-  const [showElement, setShowElement] = useState(false);
-  const [teamName, setCurrentTeamName] = useState("");
-  const [teamDesc, setCurrentTeamDesc] = useState("");
->>>>>>> Stashed changes
+  const [showElement, setShowElement] = useState(false)
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -25,6 +18,7 @@ export default function Team() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setCurrentPlayerRole(docSnap.data().playerRole);
+          setCurrentEmail(docSnap.data().email);
         } else {
           console.error("can't find user");
         }
@@ -34,68 +28,33 @@ export default function Team() {
       setShowElement(true);
     } 
     fetchData();
-<<<<<<< Updated upstream
-  }, []);
-  
-  console.log(playerRole);
-  
-=======
  
   const fetchData2 = async() => {
     try {
       const usersRef = collection(db, "teams");
-      const q = query(usersRef, where("DMEmail", "==", playerEmail));
+      const q = query(usersRef, where("DMEmail", "==", "patel.vraj1781@gmail.com"));
       const querySnapshot2 = await getDocs(q);
       querySnapshot2.forEach((doc) => {
         console.log(doc.data().DMEmail);
       })
-      if(querySnapshot2.exists()){
-        setCurrentTeamName(querySnapshot2.data().team);
-        setCurrentTeamDesc(querySnapshot2.data().description);
-        document.getElementById("teamName").innerHTML = "THIS WORKS";
-        document.getElementById("teamDescript").innerHTML = teamDesc;
-        document.write(teamName+teamDesc);
-      }
     } catch(err) {
       console.error(err);
     }
   }
   fetchData2();
-
-  const fetchData3 = async() => {
-    try {
-      const docRef = doc(db, "teams", fire.auth().currentUser.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setCurrentPlayerRole(docSnap.data().playerRole);
-        setCurrentEmail(docSnap.data().email);
-      } else {
-        console.error("can't find user");
-      }
-    } catch(err) {
-      console.error(err);
-    }
-    setShowElement(true);
-  } 
-  fetchData3();
 }, []);
-   //console.log(teamName);
+  // console.log(playerRole);
+  if(playerEmail == "DM"){
+    document.querySelector('#teamButton').innerText = 'Test';
+  }
 
 
-
->>>>>>> Stashed changes
   if (playerRole == "Player") {
     document.querySelector('#teamButton').innerText = 'Join a team';
   }
-  //If the user is a DM and if their Email is already connected to a team they should see that teams info
   else if (playerRole == "DM") {
-    if(teamName != ""){
-      document.querySelector('#teamButton').innerText = 'Create a team';
-    }else if(teamName == ""){
-      document.querySelector('#teamButton').innerText = 'Test';
-    }
+    document.querySelector('#teamButton').innerText = 'Create a team';
   }
-
 
   async function handleSubmit(e) {
     if (playerRole == "Player")
@@ -104,12 +63,11 @@ export default function Team() {
       navigate('/createTeam');
 }
   
-<<<<<<< Updated upstream
   return (
     <>
         <SideNavBar />
         <header className="custom_navbar">
-        <span id="myDiv" style={{ color: "#FFF", fontSize: "20px", paddingLeft: "5rem" }}>
+        <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
           My Team
         </span>
       </header>
@@ -120,45 +78,4 @@ export default function Team() {
       </Container>
     </>
   )
-=======
-  if(playerRole == "DM" && teamName != ""){
-    //no button if the DM already has a team created
-    return (
-      <>
-          <SideNavBar />
-          <header className="custom_navbar">
-          <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
-            My Team Exists
-          </span>
-        </header>
-        <Container className="d-flex align-items-center justify-content-center" >
-        <body>
-        Hello
-        </body>
-        </Container>
-        <div>
-        <h1> <span id="teamName">Team Name</span> </h1>
-          <p> <span id="teamDescript">Team Descript</span> </p>
-        </div>
-        
-      </>
-    )
-  }else{
-    return (
-      <>
-          <SideNavBar />
-          <header className="custom_navbar">
-          <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
-            My Team Create
-          </span>
-        </header>
-        <Container className="d-flex align-items-center justify-content-center" >
-          {showElement ? (<Button id = "teamButton" onClick = {handleSubmit} style= {{marginTop: "20rem"}}>
-          </Button> ): (<Button id = "teamButton" onClick = {handleSubmit} style= {{marginTop: "20rem", display: "none"}}>
-          </Button> )}
-        </Container>
-      </>
-    )
-  }
->>>>>>> Stashed changes
 }
