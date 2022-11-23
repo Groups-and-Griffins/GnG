@@ -6,7 +6,7 @@ import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap} from 'firebase/firestore';
 
-export default function Team() {
+export default function TeamView() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
