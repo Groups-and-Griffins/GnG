@@ -4,15 +4,14 @@ import {InputGroup, Form, Button, Container} from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
-import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap, getDocsFromServer} from 'firebase/firestore';
 
 export default function Team() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
   const [showElement, setShowElement] = useState(false);
-  const [isDM, setDMBool ] = useState(false);
-  let isTeamDM = false;
+  const [isDM, setDMBool] = useState(false);
 
   useEffect(() => {
     const fetchData = async() => {
@@ -25,20 +24,10 @@ export default function Team() {
         } else {
           console.error("can't find user");
         }
-      } catch(err) {
-        console.error(err);
-      }
-      setShowElement(true);
-    } 
-    fetchData();
-}, []);
 
-  useEffect(() => {
-    const fetchData2 = async() => {
-      try {
         const teamRef = collection(db, "teams");
-        const q = query(teamRef, where("DMEmail", "==", playerEmail));
-        const querySnapshot = await getDocs(q);
+        const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
+        const querySnapshot = await getDocsFromServer(q);
         if (!querySnapshot.empty) {
           setDMBool(true);
         } 
@@ -47,8 +36,25 @@ export default function Team() {
       }
       setShowElement(true);
     } 
-    fetchData2();
-  }, [])
+    fetchData();
+}, []);
+
+  // useEffect(() => {
+  //   const fetchData2 = async() => {
+  //     try {
+  //       const teamRef = collection(db, "teams");
+  //       const q = query(teamRef, where("DMEmail", "==", playerEmail));
+  //       const querySnapshot = await getDocsFromServer(q);
+  //       if (!querySnapshot.empty) {
+  //         setDMBool(true);
+  //       } 
+  //     } catch(err) {
+  //       console.error(err);
+  //     }
+  //     setShowElement(true);
+  //   } 
+  //   fetchData2();
+  // }, [])
 
   // console.log(playerRole);
   if(playerEmail == "DM"){

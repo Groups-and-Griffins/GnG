@@ -48,7 +48,7 @@ export default function CreateTeam() {
     if(querySnapshot.empty) {
       const data = {
         team: teamName,
-        email: playerEmail,
+        DMEmail: playerEmail,
         description: des
       };
       setDoc(docRef, data)
