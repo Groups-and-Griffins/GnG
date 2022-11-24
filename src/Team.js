@@ -11,7 +11,9 @@ export default function Team() {
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
   const [showElement, setShowElement] = useState(false);
-  const isTeamDM = new Boolean(false);
+  const [isDM, setDMBool ] = useState(false);
+  let isTeamDM = false;
+
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -29,26 +31,24 @@ export default function Team() {
       setShowElement(true);
     } 
     fetchData();
- 
+}, []);
+
+  useEffect(() => {
     const fetchData2 = async() => {
       try {
-        const usersRef = collection(db, "teams");
-        const q = query(usersRef, where("DMEmail", "==", playerEmail));
-        const querySnapshot2 = await getDocs(q);
-        querySnapshot2.forEach((doc) => {
-          console.log(doc.data().DMEmail);
-          if (playerEmail == doc.data().DMEmail) {
-              //makes boolean true if user is DM of a team
-              isTeamDM = new Boolean(true);
-            }
-        })
-         
+        const teamRef = collection(db, "teams");
+        const q = query(teamRef, where("DMEmail", "==", playerEmail));
+        const querySnapshot = await getDocs(q);
+        if (!querySnapshot.empty) {
+          setDMBool(true);
+        } 
       } catch(err) {
         console.error(err);
       }
-    }
-  fetchData2();
-}, []);
+      setShowElement(true);
+    } 
+    fetchData2();
+  }, [])
 
   // console.log(playerRole);
   if(playerEmail == "DM"){
@@ -59,19 +59,19 @@ export default function Team() {
   if (playerRole == "Player") {
     document.querySelector('#teamButton').innerText = 'Join a team';
   }
-  else if (playerRole == "DM" && isTeamDM) {
+  else if (playerRole == "DM" && isDM) {
     document.querySelector('#teamButton').innerText = 'See the Team';
   }
-  else if (playerRole == "DM") {
+  else if (playerRole == "DM" && !isDM) {
     document.querySelector('#teamButton').innerText = 'Create a team';
   }
 
   async function handleSubmit(e) {
     if (playerRole == "Player")
       navigate('/joinTeam');
-    else if (playerRole == "DM" && isTeamDM)
+    else if (playerRole == "DM" && isDM)
       navigate('/teamView');
-      else if (playerRole == "DM")
+      else if (playerRole == "DM" && !isDM)
       navigate('/createTeam');
 }
   

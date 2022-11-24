@@ -10,7 +10,8 @@ export default function TeamView() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
-  const [showElement, setShowElement] = useState(false)
+  const [showElement, setShowElement] = useState(false);
+  const isTeamDM = new Boolean(false);
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -29,40 +30,29 @@ export default function TeamView() {
     } 
     fetchData();
  
-  const fetchData2 = async() => {
-    try {
-      const usersRef = collection(db, "teams");
-      const q = query(usersRef, where("DMEmail", "==", playerEmail));
-      const querySnapshot2 = await getDocs(q);
-      querySnapshot2.forEach((doc) => {
-        console.log(doc.data().DMEmail);
-      })
-    } catch(err) {
-      console.error(err);
+    const fetchData2 = async() => {
+      try {
+        const usersRef = collection(db, "teams");
+        const q = query(usersRef, where("DMEmail", "==", playerEmail));
+        const querySnapshot2 = await getDocs(q);
+        querySnapshot2.forEach((doc) => {
+          console.log(doc.data().DMEmail);
+          if (playerEmail == doc.data().DMEmail) {
+              //makes boolean true if user is DM of a team
+              isTeamDM = new Boolean(true);
+              var e = document.getElementById("myDiv");
+              e.innerHTML = "My Team, " + doc.data().team;
+            }
+        })
+         
+      } catch(err) {
+        console.error(err);
+      }
     }
-  }
   fetchData2();
 }, []);
   // console.log(playerRole);
-  if(playerEmail == "DM"){
-    document.querySelector('#teamButton').innerText = 'Test';
-  }
 
-
-  if (playerRole == "Player") {
-    document.querySelector('#teamButton').innerText = 'Join a team';
-  }
-  else if (playerRole == "DM") {
-    document.querySelector('#teamButton').innerText = 'Create a team';
-  }
-
-  async function handleSubmit(e) {
-    if (playerRole == "Player")
-      navigate('/joinTeam');
-    else if (playerRole == "DM")
-      navigate('/createTeam');
-}
-  
   return (
     <>
         <SideNavBar />
@@ -72,9 +62,7 @@ export default function TeamView() {
         </span>
       </header>
       <Container className="d-flex align-items-center justify-content-center" >
-        {showElement ? (<Button id = "teamButton" onClick = {handleSubmit} style= {{marginTop: "20rem"}}>
-        </Button> ): (<Button id = "teamButton" onClick = {handleSubmit} style= {{marginTop: "20rem", display: "none"}}>
-        </Button> )}
+ 
       </Container>
     </>
   )
