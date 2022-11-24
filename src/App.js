@@ -20,6 +20,7 @@ import User from "./User";
 import JoinTeam from "./JoinTeam";
 import CreateTeam from "./CreateTeam";
 import Friends from "./Friends";
+import TeamView from "./TeamView";
 
 export default function App() {
   var id;

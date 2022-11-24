@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { Component, useState, useRef, useEffect, useContext} from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./UserAuth/AuthContext";
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
@@ -7,9 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {FaSearch, FaHome, FaUser, FaUserFriends} from 'react-icons/fa';
 import {MdLogout, MdOutlineGroup} from 'react-icons/md';
 import {GiSpikedDragonHead} from 'react-icons/gi';
+import fire from './UserAuth/config/fire';
+import {db} from './UserAuth/config/fire';
+import { Card, Button, Form, Alert, Container } from "react-bootstrap"
+import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap} from 'firebase/firestore';
+
 
 export default function SideNavBar() {
-    const navigate = useNavigate();
+    
     const { currentUser, logout } = useAuth();
     const [error, setError] = useState("");
     let toggled = false;
@@ -22,6 +27,33 @@ export default function SideNavBar() {
           setError("Failed to log out")
         }
       }
+
+      //CHECK IF USER IS DM AND IF THEY HAVE A TEAM
+      let navigate = useNavigate();
+  const [playerRole, setCurrentPlayerRole] = useState("");
+  const [playerEmail, setCurrentEmail] = useState("");
+  const [showElement, setShowElement] = useState(false)
+  const [isTeamDM, setDMStatus] = useState(false);
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const docRef = doc(db, "users", fire.auth().currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setCurrentPlayerRole(docSnap.data().playerRole);
+          setCurrentEmail(docSnap.data().email);
+        } else {
+          console.error("can't find user");
+        }
+      } catch(err) {
+        console.error(err);
+      }
+      setShowElement(true);
+    } 
+    fetchData();
+ 
+}, []);
+
   return (
 <SideNav style={{ background: "#000", }}
           onSelect={(selected) => {
@@ -33,7 +65,14 @@ export default function SideNavBar() {
                       navigate("/search");
                       break;
                 case "team":
-                    navigate("/team");
+                      navigate("/team");
+                    
+                    break;
+                case "profile":
+                    navigate("/dashboard");
+                    break;
+                case "logout":
+                    handleLogout();
                     break;
                 case "friends":
                     navigate("/friends");
