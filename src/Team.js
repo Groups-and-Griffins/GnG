@@ -39,24 +39,6 @@ export default function Team() {
     fetchData();
 }, []);
 
-  // useEffect(() => {
-  //   const fetchData2 = async() => {
-  //     try {
-  //       const teamRef = collection(db, "teams");
-  //       const q = query(teamRef, where("DMEmail", "==", playerEmail));
-  //       const querySnapshot = await getDocsFromServer(q);
-  //       if (!querySnapshot.empty) {
-  //         setDMBool(true);
-  //       } 
-  //     } catch(err) {
-  //       console.error(err);
-  //     }
-  //     setShowElement(true);
-  //   } 
-  //   fetchData2();
-  // }, [])
-
-  // console.log(playerRole);
   if(playerEmail == "DM"){
     document.querySelector('#teamButton').innerText = 'Test';
   }
