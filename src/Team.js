@@ -39,11 +39,6 @@ export default function Team() {
     fetchData();
 }, []);
 
-  if(playerEmail == "DM"){
-    document.querySelector('#teamButton').innerText = 'Test';
-  }
-
-
   if (playerRole == "Player") {
     document.querySelector('#teamButton').innerText = 'Join a team';
   }

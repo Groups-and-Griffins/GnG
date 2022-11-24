@@ -4,14 +4,16 @@ import {InputGroup, Form, Button, Container} from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
-import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap} from 'firebase/firestore';
+import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap, getDocsFromServer} from 'firebase/firestore';
 
 export default function TeamView() {
   let navigate = useNavigate();
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
+  const [teamName, setCurrentTeamName] = useState("");
   const [showElement, setShowElement] = useState(false);
-  const isTeamDM = new Boolean(false);
+  const [isDM, setDMBool] = useState(false);
+
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -23,35 +25,29 @@ export default function TeamView() {
         } else {
           console.error("can't find user");
         }
+
+        const teamRef = collection(db, "teams");
+        const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
+        const querySnapshot = await getDocsFromServer(q);
+        if (!querySnapshot.empty) {
+          setDMBool(true);
+          setCurrentTeamName(querySnapshot.data().team);
+          var e = document.getElementById("myDiv");
+          e.innerHTML = "My Team, " + querySnapshot.data().email;
+          document.querySelector('#practice').innerText = querySnapshot.data().email;
+        } 
       } catch(err) {
         console.error(err);
       }
       setShowElement(true);
     } 
     fetchData();
- 
-    const fetchData2 = async() => {
-      try {
-        const usersRef = collection(db, "teams");
-        const q = query(usersRef, where("DMEmail", "==", playerEmail));
-        const querySnapshot2 = await getDocs(q);
-        querySnapshot2.forEach((doc) => {
-          console.log(doc.data().DMEmail);
-          if (playerEmail == doc.data().DMEmail) {
-              //makes boolean true if user is DM of a team
-              isTeamDM = new Boolean(true);
-              var e = document.getElementById("myDiv");
-              e.innerHTML = "My Team, " + doc.data().team;
-            }
-        })
-         
-      } catch(err) {
-        console.error(err);
-      }
-    }
-  fetchData2();
 }, []);
-  // console.log(playerRole);
+
+  async function handleSubmit(e) {
+    if (playerRole == "Player")
+      navigate('/joinTeam');
+}
 
   return (
     <>
@@ -62,7 +58,9 @@ export default function TeamView() {
         </span>
       </header>
       <Container className="d-flex align-items-center justify-content-center" >
- 
+      {showElement ? (<Button id = "practice" onClick = {handleSubmit} style= {{marginTop: "20rem"}}>
+        </Button> ): (<Button id = "practice" onClick = {handleSubmit} style= {{marginTop: "20rem", display: "none"}}>
+        </Button> )}
       </Container>
     </>
   )
