@@ -51,26 +51,6 @@ export default function SideNavBar() {
     } 
     fetchData();
  
-  const fetchData2 = async() => {
-    try {
-      const usersRef = collection(db, "teams");
-      const q = query(usersRef, where("DMEmail", "==", playerEmail));
-      const querySnapshot2 = await getDocs(q);
-      querySnapshot2.forEach((doc) => {
-        console.log(doc.data().DMEmail);
-        if (playerEmail == doc.data().DMEmail) {
-            //makes boolean true if user is DM of a team
-            setDMStatus(true);
-          }
-          console.log(playerEmail);
-          console.log(doc.data().DMEmail);
-      })
-       
-    } catch(err) {
-      console.error(err);
-    }
-  }
-  fetchData2();
 }, []);
 
   return (
@@ -84,11 +64,8 @@ export default function SideNavBar() {
                       navigate("/search");
                       break;
                 case "team":
-                    if(isTeamDM){
-                        navigate("/teamView");
-                    }else{
-                        navigate("/team");
-                    }
+                      navigate("/team");
+                    
                     break;
                 case "profile":
                     navigate("/dashboard");

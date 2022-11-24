@@ -11,7 +11,7 @@ export default function Team() {
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
   const [showElement, setShowElement] = useState(false);
-  const [isTeamDM, setDMStatus] = useState(false);
+  const isTeamDM = new Boolean(false);
   useEffect(() => {
     const fetchData = async() => {
       try {
@@ -39,10 +39,8 @@ export default function Team() {
           console.log(doc.data().DMEmail);
           if (playerEmail == doc.data().DMEmail) {
               //makes boolean true if user is DM of a team
-              setDMStatus(true);
+              isTeamDM = new Boolean(true);
             }
-            console.log(playerEmail);
-            console.log(doc.data().DMEmail);
         })
          
       } catch(err) {
