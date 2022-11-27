@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {DayPilot, DayPilotCalendar, DayPilotNavigator} from "@daypilot/daypilot-lite-react";
 import { Form, Button, Card, Alert, Container, InputGroup } from "react-bootstrap"
 import { withRouter } from './withRouter';
-//import { Grid } from '@material-ui/core'
+import Grid from '@mui/material/Grid';
 import "./CalendarStyles.css";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
@@ -50,9 +50,9 @@ class User extends Component {
   }
 
   async componentDidMount() {
-    if (myID != null) {
+    if (myID == null) {
       console.log("isNull");
-      //this.goBack();
+      this.goBack();
     }
     else {
       // console.log(myID);
@@ -63,33 +63,34 @@ class User extends Component {
       const myList = [];
 
       //get user info
-      // const usersRef = collection(db, "users");
-      // const q1 = query(usersRef, where("userID", "==", myID));
-      // const querySnapshot1 = await getDocs(q1);
-      // var username, name;
-      // querySnapshot1.forEach((doc) => {
-      //   username = doc.data().username;
-      //   name = doc.data().name;
-      // });
+      const usersRef = collection(db, "users");
+      const q1 = query(usersRef, where("userID", "==", myID));
+      const querySnapshot1 = await getDocs(q1);
+      var username, name, bio;
+      querySnapshot1.forEach((doc) => {
+        username = doc.data().username;
+        name = doc.data().name;
+        bio = doc.data().bio;
+      });
 
       //Get schedule
-      // const querySnapshot = await getDocs(collection(db, "users", myID, "schedule"));
-      // querySnapshot.forEach((doc) => {
-      //   const event = doc.data();
-      //   myList.push(event);
-      // });
+      const querySnapshot = await getDocs(collection(db, "users", myID, "schedule"));
+      querySnapshot.forEach((doc) => {
+        const event = doc.data();
+        myList.push(event);
+      });
 
-      // const events = myList
-      // const startDate = "2022-11-14";
-      // this.calendar.update({startDate, events});
+      const events = myList
+      const startDate = "2022-11-14";
+      this.calendar.update({startDate, events});
 
-      // var navbar = document.getElementById("myDiv");
-      // navbar.innerHTML = "Search Result: " + username;
-
+      var navbar = document.getElementById("usernameDiv");
+      navbar.innerHTML = "Search Result: " + username;
       
-      // var nameHeader = document.getElementById("name");
-      // console.log(name);
-      // nameHeader.textContent = name;
+      var nameHeader = document.getElementById("name");
+      nameHeader.textContent = name;
+
+      document.getElementById("bioDiv").innerHTML = bio;
       
     }
   }
@@ -99,14 +100,14 @@ class User extends Component {
   }
 
   async addFriend() {
-    // document.getElementById("addFriend").disabled = true;
-    // const usersRef = collection(db, "users");
-    // const q1 = query(usersRef, where("userID", "==", fire.auth().currentUser.uid));
-    // const querySnapshot1 = await getDocs(q1);
-    // querySnapshot1.forEach((doc) => {
-    //   console.log(doc.data().username);
-    //   //name = doc.data().name;
-    // });
+    document.getElementById("addFriend").disabled = true;
+    const usersRef = collection(db, "users");
+    const q1 = query(usersRef, where("userID", "==", fire.auth().currentUser.uid));
+    const querySnapshot1 = await getDocs(q1);
+    querySnapshot1.forEach((doc) => {
+      console.log(doc.data().username);
+      
+    });
   }
 
   render() {
@@ -115,26 +116,24 @@ class User extends Component {
         <SideNavBar />
         <div>
           <header className="custom_navbar">
-            <span id="myDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
+            <span id="usernameDiv" style={{ color: "#FFF", fontSize: "25px", paddingLeft: "5rem" }}>
               Search Result
             </span>
           </header>
-          {/* <Grid className="grid-container">
+          <Grid className="grid-container">
             <div className="nameDiv">
               <div className="grid-container">
-                <h1 id = "name">Michael</h1>
+                <h1 id = "name"></h1>
                 <div style={{paddingTop: "8px"}}>
                 <button onClick={this.addFriend} id="addFriend" type="button" className="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><TbUserPlus/> </button>
-                 <button id = "disabled" class="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><AiFillCheckCircle/> </button> 
+                 {/* <button id = "disabled" class="friendBtn" style={{padding: "1px 7px 5px 7px"}} title = "Add Friend"><AiFillCheckCircle/> </button>  */}
                 </div>
               </div>
                 <div className="line"></div>
-                  <div >Bio</div>
+                  <div style={{fontWeight: "bold"}}>Bio: </div>
+                  <div id = "bioDiv"></div>
                 </div>
-            <div>
-              <h1 className='justify-content-center align-items-center' style= {{position: "fixed"}}> Availability</h1>
-            </div>
-          </Grid> */}
+          </Grid>
         </div>
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
             <div>
