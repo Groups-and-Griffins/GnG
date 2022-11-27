@@ -13,8 +13,9 @@ export default function TeamView() {
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
   const [teamName, setCurrentTeamName] = useState("");
-  const [userName, setCurrentUserName] = useState(""); //
+  //const [userName, setCurrentUserName] = useState(""); //
   const [showElement, setShowElement] = useState(false);
+  const [userName, setUsername] = useState("");
   const [isDM, setDMBool] = useState(false);
   const a = [];
   //a.push("E"); this will add element to end of array
@@ -27,6 +28,7 @@ export default function TeamView() {
         if (docSnap.exists()) {
           setCurrentPlayerRole(docSnap.data().playerRole);
           setCurrentEmail(docSnap.data().email);
+          setUsername(docSnap.data().username);
         } else {
           console.error("can't find user");
         }
@@ -36,8 +38,7 @@ export default function TeamView() {
         const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
         const querySnapshot = await getDocsFromServer(q);
         
-        if (!querySnapshot.empty) { //if DM 
-          const teamdis = [];
+        if (!querySnapshot.empty) { //if DM
           setDMBool(true);
           querySnapshot.forEach((doc) => {
             setCurrentTeamName(doc.data().team);
@@ -45,7 +46,26 @@ export default function TeamView() {
           //setCurrentTeamName(querySnapshot.data().team);
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
-
+          
+          const q2 = query(userRef, where("teamName", "==", teamName));
+          const querySnapshot2 = await getDocsFromServer(q2);
+          const teamMates = [];
+          const i = 0;
+          if(querySnapshot2.empty) {
+            console.error("No query results");
+          }
+          else {
+            console.error("There are results");
+          }
+          querySnapshot2.forEach((doc2) => {
+            teamMates[i] = doc2.data().username;
+            
+            console.error("Team length is " + teamMates.length);
+            for (let j = 0; j < teamMates.length; j++) { 
+              console.error(teamMates[j]);
+            }
+            i++;
+          })
 
         } else { 
           const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
@@ -54,8 +74,9 @@ export default function TeamView() {
           const i = 0;
           querySnapshot2.forEach((doc2) => {
               //teamMates[i] = doc2.data().email;
-             teamMates.push(doc2.data().email);
-            
+            if(doc2.data().username != userName) { //don't add yourself as teammate
+              teamMates.push(doc2.data().email);
+            }
             console.error("Team length is " + teamMates.length);
             for (let j = 0; j < teamMates.length; j++) { 
               console.error(teamMates[j]);
