@@ -34,8 +34,10 @@ export default function TeamView() {
           setDMBool(true);
           setCurrentTeamName(querySnapshot.data().team);
           var e = document.getElementById("myDiv");
-          e.innerHTML = "My Team, " + querySnapshot.data().email;
-          document.querySelector('#practice').innerText = querySnapshot.data().email;
+          e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
+
+          // var f = document.getElementsByClassName("text-center mb-4");
+          // f.innerHTML = "Welcome, " + teamName;
         } 
       } catch(err) {
         console.error(err);
@@ -51,8 +53,6 @@ export default function TeamView() {
     if (playerRole == "Player")
       navigate('/joinTeam');
 }
-// var e = document.getElementsByClassName("text-center mb-4");
-// e.innerHTML = "Welcome, " + teamName;
 
   return (
     <>
@@ -66,7 +66,10 @@ export default function TeamView() {
       <div className="w-100" style={{ maxWidth: "400px" }}>
           <Card>
             <Card.Body>
-              <h2 className="text-center mb-4">$teamName</h2>
+              <h2 className="text-center mb-4">
+                <strong> Welcome:</strong> {teamName}
+
+              </h2>
               {error && <Alert variant="danger">{error}</Alert>}
               <strong>Email:</strong> {playerEmail}
             </Card.Body>
