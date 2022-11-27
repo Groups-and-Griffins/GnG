@@ -28,9 +28,10 @@ export default function TeamView() {
         }
 
         const teamRef = collection(db, "teams");
+        const userRef = collection(db, "users");
         const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
         const querySnapshot = await getDocsFromServer(q);
-        if (!querySnapshot.empty) {
+        if (!querySnapshot.empty) { //if DM
           setDMBool(true);
           querySnapshot.forEach((doc) => {
             setCurrentTeamName(doc.data().team);
@@ -39,9 +40,23 @@ export default function TeamView() {
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
 
-          // var f = document.getElementsByClassName("text-center mb-4");
-          // f.innerHTML = "Welcome, " + teamName;
-        } 
+
+        } else { //if player
+          const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
+          const querySnapshot2 = await getDocsFromServer(q2);
+          const teamMates = [];
+          const i = 0;
+          querySnapshot2.forEach((doc2) => {
+            if(doc2.data().email != playerEmail) { //don't add yourself as teammate
+              teamMates[i] = doc2.data().email;
+            }
+            console.error("Team length is " + teamMates.length);
+            for (let j = 0; j < teamMates.length; j++) { 
+              console.error(teamMates[i]);
+            }
+            i++;
+          })
+        }
       } catch(err) {
         console.error(err);
       }
