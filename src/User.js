@@ -66,11 +66,12 @@ class User extends Component {
       const usersRef = collection(db, "users");
       const q1 = query(usersRef, where("userID", "==", myID));
       const querySnapshot1 = await getDocs(q1);
-      var username, name, bio;
+      var username, name, bio, role;
       querySnapshot1.forEach((doc) => {
         username = doc.data().username;
         name = doc.data().name;
         bio = doc.data().bio;
+        role = doc.data().playerRole;
       });
 
       //Get schedule
@@ -91,6 +92,7 @@ class User extends Component {
       nameHeader.textContent = name;
 
       document.getElementById("bioDiv").innerHTML = bio;
+      document.getElementById("roleDiv").innerHTML = role;
       
     }
   }
@@ -130,8 +132,10 @@ class User extends Component {
                 </div>
               </div>
                 <div className="line"></div>
-                  <div style={{fontWeight: "bold"}}>Bio: </div>
-                  <div id = "bioDiv"></div>
+                <div style={{fontWeight: "bold"}}>Bio: </div>
+                <div id = "bioDiv"></div>
+                <div style={{fontWeight: "bold"}}>Role: </div>
+                <div id = "roleDiv"></div>
                 </div>
           </Grid>
         </div>

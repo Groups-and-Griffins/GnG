@@ -15,6 +15,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
+  const [role, setRole] = useState("");
   const [bio, setBio] = useState("");
 
 
@@ -26,6 +27,7 @@ export default function Dashboard() {
         if (docSnap.exists()) {
           setUsername(docSnap.data().username);
           setBio(docSnap.data().bio);
+          setRole(docSnap.data().playerRole);
           document.getElementById('bio').value = docSnap.data().bio;
         } else {
           console.error("can't find user");
@@ -84,6 +86,7 @@ export default function Dashboard() {
               <div style={{ display: "inline-grid" }}>
               <strong>Email:</strong> {currentUser.email}
               <strong>Username:</strong> {username}
+              <strong>Role:</strong> {role}
               </div>
               <Form.Group id="username">
                   <Form.Label style={{fontWeight: "bold"}}>Bio:</Form.Label>
