@@ -26,7 +26,7 @@ export default function JoinTeam() {
             e.removeChild(e.firstChild);
         }
 
-        const usersRef = collection(db, "teams");
+        const usersRef = collection(db, "teams"); //ref
         const q = query(usersRef, where("team", "==", searchRef.current.value));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {

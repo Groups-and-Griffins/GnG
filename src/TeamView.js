@@ -7,13 +7,17 @@ import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap, getDocsFromServer} from 'firebase/firestore';
 
 export default function TeamView() {
+  //whoever in user collection has same taem name
   let navigate = useNavigate();
   const [error, setError] = useState("");
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
   const [teamName, setCurrentTeamName] = useState("");
+  const [userName, setCurrentUserName] = useState(""); //
   const [showElement, setShowElement] = useState(false);
   const [isDM, setDMBool] = useState(false);
+  const a = [];
+  //a.push("E"); this will add element to end of array
 
   useEffect(() => {
     const fetchData = async() => {
@@ -30,22 +34,40 @@ export default function TeamView() {
         const teamRef = collection(db, "teams");
         const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
         const querySnapshot = await getDocsFromServer(q);
-        if (!querySnapshot.empty) {
+        if (!querySnapshot.empty) { //means they are a DM
           setDMBool(true);
-          setCurrentTeamName(querySnapshot.data().team);
+          //setCurrentTeamName(querySnapshot.data().team);
+          querySnapshot.forEach((doc) => {
+            setCurrentTeamName(doc.data().team);
+          });
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
 
           // var f = document.getElementsByClassName("text-center mb-4");
           // f.innerHTML = "Welcome, " + teamName;
-        } 
+        } else { //user is a player
+           //whoever in user collection has same team name
+           
+           const userRef = collection(db, "users");
+           setDMBool(false);
+           querySnapshot.forEach((doc) => {
+            //array for every username
+            setCurrentUserName(doc.data().users);
+            a.push(userName);
+          });
+          console.error(a); //cmd + shft + C
+        }
       } catch(err) {
         console.error(err);
       }
       setShowElement(true);
     } 
     fetchData();
+
+
 }, []);
+
+
 
 //document.querySelector('#practice').innerText = playerRole;
 
