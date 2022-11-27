@@ -17,6 +17,7 @@ import Home from "./Home";
 import Search from "./Search";
 import Team from "./Team";
 import User from "./User";
+import About from "./About";
 
 export default function App() {
   var id;
@@ -60,6 +61,7 @@ export default function App() {
               
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/Alex" element={<Alex />} />
