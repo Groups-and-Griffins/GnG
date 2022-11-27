@@ -32,7 +32,10 @@ export default function TeamView() {
         const querySnapshot = await getDocsFromServer(q);
         if (!querySnapshot.empty) {
           setDMBool(true);
-          setCurrentTeamName(querySnapshot.data().team);
+          querySnapshot.forEach((doc) => {
+            setCurrentTeamName(doc.data().team);
+          });
+          //setCurrentTeamName(querySnapshot.data().team);
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
 
