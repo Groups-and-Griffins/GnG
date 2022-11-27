@@ -34,7 +34,8 @@ export default function CreateProfile() {
                 name: realNameRef.current.value,
                 username: userNameRef.current.value,
                 playerRole: playerRoleRef.current.value,
-                age: ageRef.current.value
+                age: ageRef.current.value,
+                teamName: ""
             };
             updateDoc(docRef, data)
             .then(docRef => { 

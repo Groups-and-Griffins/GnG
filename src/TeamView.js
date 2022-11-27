@@ -67,7 +67,7 @@ export default function TeamView() {
             i++;
           })
 
-        } else { 
+        } else { //if player
           const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
           const querySnapshot2 = await getDocsFromServer(q2);
           const teamMates = [];
