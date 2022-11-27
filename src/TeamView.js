@@ -37,6 +37,8 @@ export default function TeamView() {
         const userRef = collection(db, "users");
         const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
         const querySnapshot = await getDocsFromServer(q);
+
+        const teamMates = [];
         
         if (!querySnapshot.empty) { //if DM
           setDMBool(true);
@@ -49,7 +51,6 @@ export default function TeamView() {
           
           const q2 = query(userRef, where("teamName", "==", teamName));
           const querySnapshot2 = await getDocsFromServer(q2);
-          const teamMates = [];
           const i = 0;
           if(querySnapshot2.empty) {
             console.error("No query results");
@@ -60,30 +61,26 @@ export default function TeamView() {
           querySnapshot2.forEach((doc2) => {
             teamMates[i] = doc2.data().username;
             
-            console.error("Team length is " + teamMates.length);
-            for (let j = 0; j < teamMates.length; j++) { 
-              console.error(teamMates[j]);
-            }
-            i++;
           })
 
         } else { //if player
           const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
           const querySnapshot2 = await getDocsFromServer(q2);
-          const teamMates = [];
           const i = 0;
           querySnapshot2.forEach((doc2) => {
               //teamMates[i] = doc2.data().email;
-            if(doc2.data().username != userName) { //don't add yourself as teammate
-              teamMates.push(doc2.data().email);
-            }
-            console.error("Team length is " + teamMates.length);
-            for (let j = 0; j < teamMates.length; j++) { 
-              console.error(teamMates[j]);
+            if(doc2.data().username != docSnap.data().username) { //don't add yourself as teammate
+              teamMates.push(doc2.data().username);
             }
             
           })
           
+        }
+
+        //printing team mates
+        console.log("Teammates length is " + teamMates.length);
+        for (let j = 0; j < teamMates.length; j++) { 
+          console.log(teamMates[j]);
         }
       
       } catch(err) {
