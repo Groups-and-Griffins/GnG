@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import SideNavBar from './SideNavBar'
-import {InputGroup, Form, Button, Container} from 'react-bootstrap';
+import {InputGroup, Form, Button, Container, Card, Alert} from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
@@ -8,6 +8,7 @@ import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteD
 
 export default function TeamView() {
   let navigate = useNavigate();
+  const [error, setError] = useState("");
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
   const [teamName, setCurrentTeamName] = useState("");
@@ -44,10 +45,14 @@ export default function TeamView() {
     fetchData();
 }, []);
 
+//document.querySelector('#practice').innerText = playerRole;
+
   async function handleSubmit(e) {
     if (playerRole == "Player")
       navigate('/joinTeam');
 }
+// var e = document.getElementsByClassName("text-center mb-4");
+// e.innerHTML = "Welcome, " + teamName;
 
   return (
     <>
@@ -58,9 +63,16 @@ export default function TeamView() {
         </span>
       </header>
       <Container className="d-flex align-items-center justify-content-center" >
-      {showElement ? (<Button id = "practice" onClick = {handleSubmit} style= {{marginTop: "20rem"}}>
-        </Button> ): (<Button id = "practice" onClick = {handleSubmit} style= {{marginTop: "20rem", display: "none"}}>
-        </Button> )}
+      <div className="w-100" style={{ maxWidth: "400px" }}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">$teamName</h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <strong>Email:</strong> {playerEmail}
+            </Card.Body>
+          </Card>
+
+        </div>
       </Container>
     </>
   )

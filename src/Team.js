@@ -43,7 +43,8 @@ export default function Team() {
     document.querySelector('#teamButton').innerText = 'Join a team';
   }
   else if (playerRole == "DM" && isDM) {
-    document.querySelector('#teamButton').innerText = 'See the Team';
+    //document.querySelector('#teamButton').innerText = 'See the Team';
+    navigate('/teamView');
   }
   else if (playerRole == "DM" && !isDM) {
     document.querySelector('#teamButton').innerText = 'Create a team';
