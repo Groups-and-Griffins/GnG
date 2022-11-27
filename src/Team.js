@@ -18,6 +18,9 @@ export default function Team() {
       try {
         const docRef = doc(db, "users", fire.auth().currentUser.uid);
         const docSnap = await getDoc(docRef);
+        if(docSnap.data().teamName != "") { //if part of team and is user go to team view
+          navigate('/teamView');
+        }
         if (docSnap.exists()) {
           setCurrentPlayerRole(docSnap.data().playerRole);
           setCurrentEmail(docSnap.data().email);

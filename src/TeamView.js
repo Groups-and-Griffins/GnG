@@ -32,36 +32,46 @@ export default function TeamView() {
         }
 
         const teamRef = collection(db, "teams");
+        const userRef = collection(db, "users");
         const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
         const querySnapshot = await getDocsFromServer(q);
-        if (!querySnapshot.empty) { //means they are a DM
+        
+        if (!querySnapshot.empty) { //if DM 
+          const teamdis = [];
           setDMBool(true);
-          //setCurrentTeamName(querySnapshot.data().team);
           querySnapshot.forEach((doc) => {
             setCurrentTeamName(doc.data().team);
           });
+          //setCurrentTeamName(querySnapshot.data().team);
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
 
-          // var f = document.getElementsByClassName("text-center mb-4");
-          // f.innerHTML = "Welcome, " + teamName;
-        } else { //user is a player
-           //whoever in user collection has same team name
-           
-           const userRef = collection(db, "users");
-           setDMBool(false);
-           querySnapshot.forEach((doc) => {
-            //array for every username
-            setCurrentUserName(doc.data().users);
-            a.push(userName);
-          });
-          console.error(a); //cmd + shft + C
+
+        } else { 
+          const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
+          const querySnapshot2 = await getDocsFromServer(q2);
+          const teamMates = [];
+          const i = 0;
+          querySnapshot2.forEach((doc2) => {
+              //teamMates[i] = doc2.data().email;
+             teamMates.push(doc2.data().email);
+            
+            console.error("Team length is " + teamMates.length);
+            for (let j = 0; j < teamMates.length; j++) { 
+              console.error(teamMates[j]);
+            }
+            
+          })
+          
         }
+      
       } catch(err) {
         console.error(err);
       }
+      
       setShowElement(true);
     } 
+    
     fetchData();
 
 
@@ -86,7 +96,7 @@ export default function TeamView() {
       </header>
       <Container className="d-flex align-items-center justify-content-center" >
       <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Card>
+          <Card style = {{marginTop: "5rem"}}>
             <Card.Body>
               <h2 className="text-center mb-4">
                 <strong> Welcome:</strong> {teamName}

@@ -1,5 +1,5 @@
 import React, { Component, useState, useRef} from "react";
-import { collection, query, where, getDoc, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDoc, getDocs, doc, setDoc, updateDoc } from "firebase/firestore";
 import {db} from './UserAuth/config/fire';
 import { Link, useNavigate } from "react-router-dom";
 import { generatePath } from "react-router";
@@ -13,6 +13,7 @@ var myID;
 export default function JoinTeam() {
     let navigate = useNavigate();
     const searchRef = useRef();
+    const [teamName, setTeamName] = useState("");
     const handleKeypress = (e) => {  //it triggers by pressing the enter key
       if (e.which === 13) {
         handleSubmit();
@@ -21,7 +22,7 @@ export default function JoinTeam() {
     async function handleSubmit(e) {
         var e = document.getElementById("container");
         //const docRef = doc(db, "teams", teamName); //fill in team
-        const docRef = collection(db, "users");
+        //const docRef = collection(db, "users");
         while (e.firstChild) {
             e.removeChild(e.firstChild);
         }
@@ -29,6 +30,8 @@ export default function JoinTeam() {
         const usersRef = collection(db, "teams"); //ref
         const q = query(usersRef, where("team", "==", searchRef.current.value));
         const querySnapshot = await getDocs(q);
+        var id = fire.auth().currentUser.uid;
+        const docRef = doc(db, 'users', id);
         querySnapshot.forEach((doc) => {
             if (doc.data().userID !== fire.auth().currentUser.uid) {
             let div = document.createElement('div');
@@ -37,6 +40,14 @@ export default function JoinTeam() {
             div.className = "searchResultContainer";
             div.innerHTML =  `<span id = '${doc.data().team}' class = "searchResult" >${doc.data().team}</span>`;
             e.appendChild(div);
+            setTeamName(doc.data().team);
+            const data = {
+                teamName: doc.data().team
+            };
+            updateDoc(docRef, data)
+            .then(() => {
+                console.log("Document has been added successfully");
+            });
             }
             else {
                 let div = document.createElement('div');
@@ -60,10 +71,11 @@ export default function JoinTeam() {
         for (const result of searchResults) {
             result.addEventListener('click', function clickUser() {
                 const id = result.id
+                // const docRef = collection(db, "users");
                 // const data = {
-                //   teamName: doc.data().team
+                //   teamName: teamName
                 // };
-                // setDoc(docRef, data)
+                // updateDoc(docRef, data)
                 // .then(() => {
                 //   console.log("Document has been added successfully");
                 // });
