@@ -1,14 +1,20 @@
-import React, { useState } from "react"
+import React, { Component, useState, useRef, useEffect, useContext} from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./UserAuth/AuthContext";
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {FaSearch, FaHome, FaUser} from 'react-icons/fa';
+import {FaSearch, FaHome, FaUser, FaUserFriends} from 'react-icons/fa';
 import {MdLogout, MdOutlineGroup} from 'react-icons/md';
+import {GiSpikedDragonHead} from 'react-icons/gi';
+import fire from './UserAuth/config/fire';
+import {db} from './UserAuth/config/fire';
+import { Card, Button, Form, Alert, Container } from "react-bootstrap"
+import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap} from 'firebase/firestore';
+
 
 export default function SideNavBar() {
-    const navigate = useNavigate();
+    
     const { currentUser, logout } = useAuth();
     const [error, setError] = useState("");
     let toggled = false;
@@ -21,8 +27,35 @@ export default function SideNavBar() {
           setError("Failed to log out")
         }
       }
+
+      //CHECK IF USER IS DM AND IF THEY HAVE A TEAM
+      let navigate = useNavigate();
+  const [playerRole, setCurrentPlayerRole] = useState("");
+  const [playerEmail, setCurrentEmail] = useState("");
+  const [showElement, setShowElement] = useState(false)
+  const [isTeamDM, setDMStatus] = useState(false);
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const docRef = doc(db, "users", fire.auth().currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setCurrentPlayerRole(docSnap.data().playerRole);
+          setCurrentEmail(docSnap.data().email);
+        } else {
+          console.error("can't find user");
+        }
+      } catch(err) {
+        console.error(err);
+      }
+      setShowElement(true);
+    } 
+    fetchData();
+ 
+}, []);
+
   return (
-<SideNav style={{ background: "#000" }}
+<SideNav style={{ background: "#000", }}
           onSelect={(selected) => {
               switch (selected) {
                   case "home":
@@ -32,14 +65,24 @@ export default function SideNavBar() {
                       navigate("/search");
                       break;
                 case "team":
-                    navigate("/team");
+                      navigate("/team");
+                    
                     break;
-                  case "profile":
-                      navigate("/dashboard");
-                      break;
-                  case "logout":
-                      handleLogout();
-                      break;
+                case "profile":
+                    navigate("/dashboard");
+                    break;
+                case "logout":
+                    handleLogout();
+                    break;
+                case "friends":
+                    navigate("/friends");
+                    break;
+                case "profile":
+                    navigate("/dashboard");
+                    break;
+                case "logout":
+                    handleLogout();
+                    break;
               }
           } }
           onToggle={() => {
@@ -56,41 +99,49 @@ export default function SideNavBar() {
               <SideNav.Nav>
                   <NavItem eventKey="home">
                       <NavIcon>
-                          <FaHome />
+                          <FaHome size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                           Home
                       </NavText>
                   </NavItem>
-                  <NavItem eventKey="search">
+                  <NavItem eventKey="search" >
                       <NavIcon>
-                          <FaSearch />
+                          <FaSearch size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                           Search
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="team">
                       <NavIcon>
-                          <MdOutlineGroup />
+                          <GiSpikedDragonHead size={25}/>
                       </NavIcon>
-                      <NavText>
-                          Team
+                      <NavText style = {{fontSize: "20px"}}>
+                            My Team
+                      </NavText>
+                  </NavItem>
+                  <NavItem eventKey="friends">
+                      <NavIcon>
+                          <FaUserFriends size={25}/>
+                      </NavIcon>
+                      <NavText style = {{fontSize: "20px"}}>
+                            Friends
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="profile">
                       <NavIcon>
-                          <FaUser />
+                          <FaUser size={25}/>
                       </NavIcon>
-                      <NavText>
-                          Profile
+                      <NavText style = {{fontSize: "20px"}}>
+                            Profile
                       </NavText>
                   </NavItem>
                   <NavItem eventKey="logout">
                       <NavIcon>
-                          <MdLogout />
+                          <MdLogout size={25}/>
                       </NavIcon>
-                      <NavText>
+                      <NavText style = {{fontSize: "20px"}}>
                           Logout
                       </NavText>
                   </NavItem>

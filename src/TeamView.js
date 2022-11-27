@@ -1,15 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import SideNavBar from './SideNavBar'
-import {InputGroup, Form, Button, Container} from 'react-bootstrap';
+import {InputGroup, Form, Button, Container, Card, Alert} from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
 import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap, getDocsFromServer} from 'firebase/firestore';
 
-export default function Team() {
+export default function TeamView() {
   let navigate = useNavigate();
+  const [error, setError] = useState("");
   const [playerRole, setCurrentPlayerRole] = useState("");
   const [playerEmail, setCurrentEmail] = useState("");
+  const [teamName, setCurrentTeamName] = useState("");
   const [showElement, setShowElement] = useState(false);
   const [isDM, setDMBool] = useState(false);
 
@@ -30,6 +32,12 @@ export default function Team() {
         const querySnapshot = await getDocsFromServer(q);
         if (!querySnapshot.empty) {
           setDMBool(true);
+          setCurrentTeamName(querySnapshot.data().team);
+          var e = document.getElementById("myDiv");
+          e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
+
+          // var f = document.getElementsByClassName("text-center mb-4");
+          // f.innerHTML = "Welcome, " + teamName;
         } 
       } catch(err) {
         console.error(err);
@@ -39,26 +47,13 @@ export default function Team() {
     fetchData();
 }, []);
 
-  if (playerRole == "Player") {
-    document.querySelector('#teamButton').innerText = 'Join a team';
-  }
-  else if (playerRole == "DM" && isDM) {
-    //document.querySelector('#teamButton').innerText = 'See the Team';
-    navigate('/teamView');
-  }
-  else if (playerRole == "DM" && !isDM) {
-    document.querySelector('#teamButton').innerText = 'Create a team';
-  }
+//document.querySelector('#practice').innerText = playerRole;
 
   async function handleSubmit(e) {
     if (playerRole == "Player")
       navigate('/joinTeam');
-    else if (playerRole == "DM" && isDM)
-      navigate('/teamView');
-      else if (playerRole == "DM" && !isDM)
-      navigate('/createTeam');
 }
-  
+
   return (
     <>
         <SideNavBar />
@@ -68,9 +63,19 @@ export default function Team() {
         </span>
       </header>
       <Container className="d-flex align-items-center justify-content-center" >
-        {showElement ? (<Button id = "teamButton" onClick = {handleSubmit} style= {{marginTop: "20rem"}}>
-        </Button> ): (<Button id = "teamButton" onClick = {handleSubmit} style= {{marginTop: "20rem", display: "none"}}>
-        </Button> )}
+      <div className="w-100" style={{ maxWidth: "400px" }}>
+          <Card>
+            <Card.Body>
+              <h2 className="text-center mb-4">
+                <strong> Welcome:</strong> {teamName}
+
+              </h2>
+              {error && <Alert variant="danger">{error}</Alert>}
+              <strong>Email:</strong> {playerEmail}
+            </Card.Body>
+          </Card>
+
+        </div>
       </Container>
     </>
   )

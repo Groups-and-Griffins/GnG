@@ -19,6 +19,8 @@ import Team from "./Team";
 import User from "./User";
 import JoinTeam from "./JoinTeam";
 import CreateTeam from "./CreateTeam";
+import Friends from "./Friends";
+import TeamView from "./TeamView";
 
 export default function App() {
   var id;
@@ -28,52 +30,67 @@ export default function App() {
         <Router>
           <AuthProvider>
             <Routes>
-            {/* <Route exact path='/' element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-              }>
-            </Route> */}
               <Route exact path='/dashboard' element={
                 <PrivateRoute>
                   <Dashboard />
                 </PrivateRoute>
-              }>
-              </Route>
-
+              }></Route>
             <Route exact path='/createprofile' element={
                 <PrivateRoute>
                   <CreateProfile />
                 </PrivateRoute>
-              }>
-              </Route>
+              }></Route>
               <Route exact path='/calendar' element={
                 <PrivateRoute>
                   <Calendar />
                 </PrivateRoute>
-              }>
-              </Route>
+              }></Route>
               <Route exact path='/team' element={
                 <PrivateRoute>
                   <Team />
                 </PrivateRoute>
-              }>
-              </Route>
+              }></Route>
+              <Route exact path="/user/:id" element={
+                <PrivateRoute>
+                  <User />
+                </PrivateRoute>
+              }></Route>
+              <Route exact path="/calendar" element={
+                <PrivateRoute>
+                  <Calendar />
+                </PrivateRoute>
+              }></Route>
+              <Route exact path="/search" element={
+                <PrivateRoute>
+                  <Search />
+                </PrivateRoute>
+              }></Route>
+              <Route exact path="/joinTeam" element={
+                <PrivateRoute>
+                  <JoinTeam />
+                </PrivateRoute>
+              }></Route>
+              <Route exact path="/createTeam" element={
+                <PrivateRoute>
+                  <CreateTeam />
+                </PrivateRoute>
+              }></Route>
+              <Route exact path="/friends" element={
+                <PrivateRoute>
+                  <Friends />
+                </PrivateRoute>
+              }></Route>
               
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/Alex" element={<Alex />} />
+            <Route path="/teamView" element={<TeamView />} />
+            {/* <Route path="/Alex" element={<Alex />} />
             <Route path="/helloworld" element={<HelloWorld />} />
             <Route path="/helloGriffins" element={<HelloGriffins />} />
-            <Route path="/update" element={<Update />} />
-            <Route path="/playerPage" element={<PlayerPage />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/joinTeam" element={<JoinTeam />} />
-            <Route path="/createTeam" element={<CreateTeam />} />
-            <Route path="/user/:id" element={<User/>}/>
+            <Route path="/update" element={<Update />} /> */}
+            {/* <Route path="/playerPage" element={<PlayerPage />} /> */}
             </Routes>
           </AuthProvider>
         </Router>
