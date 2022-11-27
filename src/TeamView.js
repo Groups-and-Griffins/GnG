@@ -67,7 +67,7 @@ export default function TeamView() {
       </header>
       <Container className="d-flex align-items-center justify-content-center" >
       <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Card>
+          <Card style = {{marginTop: "5rem"}}>
             <Card.Body>
               <h2 className="text-center mb-4">
                 <strong> Welcome:</strong> {teamName}
