@@ -88,12 +88,6 @@ export default function Signup() {
                         <a className="nav-link" href="about.html">About </a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="service.html">Services </a>
-                      </li>
-                      <li className="nav-item">
-                        <a className="nav-link" href="contact.html">Contact</a>
-                      </li>
-                      <li className="nav-item">
                         <a className="nav-link" href="/login"> Login</a>
                       </li>
                       <li className="nav-item">
