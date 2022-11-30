@@ -42,6 +42,15 @@ export default function TeamView() {
         
         if (!querySnapshot.empty) { //if DM
           setDMBool(true);
+          const q2 = query(userRef, where("teamName", "==", teamName));
+          const querySnapshot2 = await getDocsFromServer(q2);
+          querySnapshot2.forEach((doc2) => {
+            teamMates.push(doc2.data().username);
+            
+          })
+          for (let j = 0; j < teamMates.length; j++) { 
+            console.log(teamMates[j]);
+          }
           querySnapshot.forEach((doc) => {
             setCurrentTeamName(doc.data().team);
           });
@@ -49,24 +58,10 @@ export default function TeamView() {
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
           
-          const q2 = query(userRef, where("teamName", "==", teamName));
-          const querySnapshot2 = await getDocsFromServer(q2);
-          const i = 0;
-          if(querySnapshot2.empty) {
-            console.error("No query results");
-          }
-          else {
-            console.error("There are results");
-          }
-          querySnapshot2.forEach((doc2) => {
-            teamMates[i] = doc2.data().username;
-            
-          })
 
         } else { //if player
           const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
           const querySnapshot2 = await getDocsFromServer(q2);
-          const i = 0;
           querySnapshot2.forEach((doc2) => {
               //teamMates[i] = doc2.data().email;
             if(doc2.data().username != docSnap.data().username) { //don't add yourself as teammate
