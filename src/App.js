@@ -22,6 +22,7 @@ import JoinTeam from "./JoinTeam";
 import CreateTeam from "./CreateTeam";
 import Friends from "./Friends";
 import TeamView from "./TeamView";
+import About from "./About";
 
 export default function App() {
   var id;
@@ -92,6 +93,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/teamView" element={<TeamView />} />
+            <Route path="/about" element={<About />} />
             {/* <Route path="/Alex" element={<Alex />} />
             <Route path="/helloworld" element={<HelloWorld />} />
             <Route path="/helloGriffins" element={<HelloGriffins />} />
