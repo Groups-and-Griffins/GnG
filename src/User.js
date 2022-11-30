@@ -9,7 +9,9 @@ import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, DocumentSnapshot, getDoc, getDocs, onSnapshot, deleteDoc, query, where} from 'firebase/firestore';
 import SideNavBar from './SideNavBar';
 import Search from './Search';
+import teamView from './TeamView';
 import {myID} from './Search';
+import {teamTrue} from './TeamView';
 import {AiFillPlusCircle, AiFillCheckCircle} from 'react-icons/ai';
 import {TbUserPlus} from 'react-icons/tb';
 
@@ -50,10 +52,12 @@ class User extends Component {
   }
 
   async componentDidMount() {
+    console.log(myID + " is id1");
     if (myID == null) {
       console.log("isNull");
-      this.goBack();
+      //this.goBack();
     }
+    
     else {
       // console.log(myID);
       // const str = window.location.href;
@@ -98,7 +102,13 @@ class User extends Component {
   }
 
   goBack() {
-    this.props.navigate('/search')
+    //this.props.navigate('/search')
+    if(!teamTrue) {
+      this.props.navigate('/search')
+    }
+    else {
+      this.props.navigate('/teamView')
+    }
   }
 
   async addFriend() {
@@ -160,9 +170,7 @@ class User extends Component {
                 </div>
               </div>
               <div className="d-flex align-items-center">
-                <Button onClick={this.goBack} className="w-50 mt-4 mx-auto" type="button">
-                  Back to Search
-                </Button>
+                {/* Got rid of button because for some reason was causing problems */}
               </div>
             </div>
           </Container>

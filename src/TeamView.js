@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { generatePath } from "react-router";
 import SideNavBar from './SideNavBar'
 import {InputGroup, Form, Button, Container, Card, Alert} from 'react-bootstrap';
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +7,8 @@ import fire from './UserAuth/config/fire';
 import {db} from './UserAuth/config/fire';
 import {collection, updateDoc, setDoc, doc, getDoc, getDocs, onSnapshot, deleteDoc, query, where, docSnap, getDocsFromServer} from 'firebase/firestore';
 
+var myID2 = null;
+var teamTrue = true;
 export default function TeamView() {
   //whoever in user collection has same taem name
   let navigate = useNavigate();
@@ -19,10 +22,16 @@ export default function TeamView() {
   const [isDM, setDMBool] = useState(false);
   const a = [];
   const teamMates = [];
+  let hasRun = false;
+  //const [hasRun, setRun] = useState(false);
   //a.push("E"); this will add element to end of array
 
   useEffect(() => {
     const fetchData = async() => {
+      var e = document.getElementById("container");
+      while (e.firstChild) {
+        e.removeChild(e.firstChild);
+      }
       try {
         const docRef = doc(db, "users", fire.auth().currentUser.uid);
         const docSnap = await getDoc(docRef);
@@ -46,15 +55,40 @@ export default function TeamView() {
             setCurrentTeamName(doc.data().team);
             saveTeam = doc.data().team;
           })
-
+          let saveID = "";
           const q2 = query(userRef, where("teamName", "==", saveTeam));
           const querySnapshot2 = await getDocsFromServer(q2);
           querySnapshot2.forEach((doc2) => {
             teamMates.push(doc2.data().username);
+            myID2 = doc2.data().userID;
+            saveID = doc2.data().userID;
             
           })
-          for (let j = 0; j < teamMates.length; j++) { 
-            console.log(teamMates[j]);
+          if(!hasRun) {
+            for (let j = 0; j < teamMates.length; j++) { 
+              hasRun = true;
+              console.log(teamMates[j]);
+              let div = document.createElement('div');
+              myID2 = saveID;
+              div.id=String(saveID);
+              div.className = "searchResultContainer";
+              div.innerHTML =  `<span id = '${teamMates[j]}' class = "searchResult" >${teamMates[j]}</span>`;
+              e.appendChild(div);
+            }
+            const searchResults = document.getElementsByClassName('searchResult');
+
+            for (const result of searchResults) {
+                result.addEventListener('click', async function clickUser() {
+                    const id = result.id
+                    const q3 = query(userRef, where("username", "==", id));
+                    const querySnapshot3 = await getDocsFromServer(q3);
+                    querySnapshot3.forEach((doc3) => {
+                      myID2 = doc3.data().userID;
+            
+                    })
+                    navigate(generatePath("/user/:id/", {id: id,}));
+                }
+            )}
           }
           
           //setCurrentTeamName(querySnapshot.data().team);
@@ -126,6 +160,14 @@ export default function TeamView() {
 
         </div>
       </Container>
+      <Container id = "container">
+            {/* <div id="getText" style={{textAlign:"center", display: "none"}}>
+                Here
+            </div> */}
+        </Container>
     </>
   )
 }
+
+export var teamTrue;
+export var myID2;
