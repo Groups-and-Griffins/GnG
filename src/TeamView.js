@@ -18,6 +18,7 @@ export default function TeamView() {
   const [userName, setUsername] = useState("");
   const [isDM, setDMBool] = useState(false);
   const a = [];
+  const teamMates = [];
   //a.push("E"); this will add element to end of array
 
   useEffect(() => {
@@ -38,11 +39,15 @@ export default function TeamView() {
         const q = query(teamRef, where("DMEmail", "==", docSnap.data().email));
         const querySnapshot = await getDocsFromServer(q);
 
-        const teamMates = [];
-        
+        let saveTeam = "";
         if (!querySnapshot.empty) { //if DM
           setDMBool(true);
-          const q2 = query(userRef, where("teamName", "==", teamName));
+          querySnapshot.forEach((doc) => { //after this code blocks the code doesn't want to execute anymore, this is only the case if you are a DM
+            setCurrentTeamName(doc.data().team);
+            saveTeam = doc.data().team;
+          })
+
+          const q2 = query(userRef, where("teamName", "==", saveTeam));
           const querySnapshot2 = await getDocsFromServer(q2);
           querySnapshot2.forEach((doc2) => {
             teamMates.push(doc2.data().username);
@@ -51,9 +56,7 @@ export default function TeamView() {
           for (let j = 0; j < teamMates.length; j++) { 
             console.log(teamMates[j]);
           }
-          querySnapshot.forEach((doc) => { //after this code blocks the code doesn't want to execute anymore, this is only the case if you are a DM
-            setCurrentTeamName(doc.data().team);
-          });
+          
           //setCurrentTeamName(querySnapshot.data().team);
           var e = document.getElementById("myDiv");
           e.innerHTML = "My Team, " + querySnapshot.data().DMEmail;
@@ -62,6 +65,7 @@ export default function TeamView() {
         } else { //if player
           const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
           const querySnapshot2 = await getDocsFromServer(q2);
+          setCurrentTeamName(docSnap.data().teamName);
           querySnapshot2.forEach((doc2) => {
               //teamMates[i] = doc2.data().email;
             if(doc2.data().username != docSnap.data().username) { //don't add yourself as teammate
