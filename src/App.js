@@ -17,6 +17,7 @@ import Home from "./Home";
 import Search from "./Search";
 import Team from "./Team";
 import User from "./User";
+import User2 from "./User2";
 import JoinTeam from "./JoinTeam";
 import CreateTeam from "./CreateTeam";
 import Friends from "./Friends";
@@ -53,6 +54,11 @@ export default function App() {
               <Route exact path="/user/:id" element={
                 <PrivateRoute>
                   <User />
+                </PrivateRoute>
+              }></Route>
+              <Route exact path="/user2/:id" element={
+                <PrivateRoute>
+                  <User2 />
                 </PrivateRoute>
               }></Route>
               <Route exact path="/calendar" element={

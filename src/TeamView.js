@@ -86,7 +86,7 @@ export default function TeamView() {
                       myID2 = doc3.data().userID;
             
                     })
-                    navigate(generatePath("/user/:id/", {id: id,}));
+                    navigate(generatePath("/user2/:id/", {id: id,}));
                 }
             )}
           }

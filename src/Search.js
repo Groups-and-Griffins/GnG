@@ -7,11 +7,9 @@ import SideNavBar from './SideNavBar';
 import {InputGroup, Form, Button, Container} from 'react-bootstrap';
 import { withRouter } from "./withRouter";
 import User from "./User";
-import {myID2} from './TeamView';
 import fire from './UserAuth/config/fire';
 
 var myID = null;
-myID2 = null;
 export default function Search() {
     let navigate = useNavigate();
     const searchRef = useRef();
