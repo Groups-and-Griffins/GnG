@@ -80,7 +80,7 @@ export default function CreateTeam() {
                         <Form.Control type="text" ref={teamDescriptionRef} required />
                     </Form.Group>
                     <Button disabled={loading} className="w-100 mt-4" type="submit">
-                        Create Profile
+                        Create Team
                     </Button>
                 </Form>
             </Card.Body>
