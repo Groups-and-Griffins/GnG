@@ -74,7 +74,7 @@ export default function CreateProfile() {
                                         <option value="">Select a role</option>
                                         <option value="Player">Player</option>
                                         <option value="DM">Dungeon Master</option>
-                                        <option value="NP">No Preference</option>
+                                        {/* <option value="NP">No Preference</option> */}
                                     </Form.Control>
                                     {/* <Form.Control type="username" ref={userNameRef} required /> */}
                                 </Form.Group>
