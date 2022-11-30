@@ -55,7 +55,7 @@ class User extends Component {
   async componentDidMount() {
     console.log(myID + " is id1");
     console.log(myID2 + " is id2");
-    if (myID == null) {
+    if (myID2 == null) {
       console.log("isNull");
       //this.goBack();
     }
@@ -98,7 +98,6 @@ class User extends Component {
 
       document.getElementById("bioDiv").innerHTML = bio;
       document.getElementById("roleDiv").innerHTML = role;
-      myID2 = null;
       
     }
   }

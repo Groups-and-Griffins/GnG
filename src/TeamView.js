@@ -100,13 +100,44 @@ export default function TeamView() {
           const q2 = query(userRef, where("teamName", "==", docSnap.data().teamName));
           const querySnapshot2 = await getDocsFromServer(q2);
           setCurrentTeamName(docSnap.data().teamName);
+          saveTeam = docSnap.data().teamName;
+          let saveID = "";
           querySnapshot2.forEach((doc2) => {
               //teamMates[i] = doc2.data().email;
             if(doc2.data().username != docSnap.data().username) { //don't add yourself as teammate
               teamMates.push(doc2.data().username);
+              myID2 = doc2.data().userID;
+              saveID = doc2.data().userID;
             }
             
           })
+
+          if(!hasRun) {
+            for (let j = 0; j < teamMates.length; j++) { 
+              hasRun = true;
+              console.log(teamMates[j]);
+              let div = document.createElement('div');
+              myID2 = saveID;
+              div.id=String(saveID);
+              div.className = "searchResultContainer";
+              div.innerHTML =  `<span id = '${teamMates[j]}' class = "searchResult" >${teamMates[j]}</span>`;
+              e.appendChild(div);
+            }
+            const searchResults = document.getElementsByClassName('searchResult');
+
+            for (const result of searchResults) {
+                result.addEventListener('click', async function clickUser() {
+                    const id = result.id
+                    const q3 = query(userRef, where("username", "==", id));
+                    const querySnapshot3 = await getDocsFromServer(q3);
+                    querySnapshot3.forEach((doc3) => {
+                      myID2 = doc3.data().userID;
+            
+                    })
+                    navigate(generatePath("/user2/:id/", {id: id,}));
+                }
+            )}
+          }
           
         }
 
