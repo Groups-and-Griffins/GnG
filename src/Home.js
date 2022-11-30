@@ -424,7 +424,7 @@ export default function Home() {
 
     {/* end client section */}
     {/* contact section */}
-    <section className="contact_section layout_padding">
+    {/* <section className="contact_section layout_padding">
       <div className="container contact_heading">
         <h2>
           Contact Us
@@ -466,11 +466,11 @@ export default function Home() {
       <div className="d-flex justify-content-center">
         <button type="submit" className>Send</button>
       </div>
-    </section>
+    </section> */}
     {/* end contact section */}
     <div className="footer_bg">
       {/* info section */}
-      <section className="info_section layout_padding2-bottom">
+      {/* <section className="info_section layout_padding2-bottom">
         <div className="container">
           <h3 className>
             BigWing
@@ -698,7 +698,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* end info_section */}
       {/* footer section */}
       <section className="container-fluid footer_section">
