@@ -51,7 +51,7 @@ export default function TeamView() {
           for (let j = 0; j < teamMates.length; j++) { 
             console.log(teamMates[j]);
           }
-          querySnapshot.forEach((doc) => {
+          querySnapshot.forEach((doc) => { //after this code blocks the code doesn't want to execute anymore, this is only the case if you are a DM
             setCurrentTeamName(doc.data().team);
           });
           //setCurrentTeamName(querySnapshot.data().team);
