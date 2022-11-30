@@ -55,7 +55,7 @@ class User extends Component {
     console.log(myID + " is id1");
     if (myID == null) {
       console.log("isNull");
-      //this.goBack();
+      this.goBack();
     }
     
     else {
@@ -102,13 +102,7 @@ class User extends Component {
   }
 
   goBack() {
-    //this.props.navigate('/search')
-    if(!teamTrue) {
-      this.props.navigate('/search')
-    }
-    else {
-      this.props.navigate('/teamView')
-    }
+    this.props.navigate('/search')
   }
 
   async addFriend() {
@@ -170,7 +164,9 @@ class User extends Component {
                 </div>
               </div>
               <div className="d-flex align-items-center">
-                {/* Got rid of button because for some reason was causing problems */}
+              <Button onClick={this.goBack} className="w-50 mt-4 mx-auto" type="button">
+                  Back to Search
+              </Button>
               </div>
             </div>
           </Container>
