@@ -66,7 +66,6 @@ export default function SideNavBar() {
                       break;
                 case "team":
                       navigate("/team");
-                    
                     break;
                 case "profile":
                     navigate("/dashboard");
@@ -74,9 +73,9 @@ export default function SideNavBar() {
                 case "logout":
                     handleLogout();
                     break;
-                case "friends":
-                    navigate("/friends");
-                    break;
+                // case "friends":
+                //     navigate("/friends");
+                //     break;
                 case "profile":
                     navigate("/dashboard");
                     break;
@@ -121,14 +120,14 @@ export default function SideNavBar() {
                             My Team
                       </NavText>
                   </NavItem>
-                  <NavItem eventKey="friends">
+                  {/* <NavItem eventKey="friends">
                       <NavIcon>
                           <FaUserFriends size={25}/>
                       </NavIcon>
                       <NavText style = {{fontSize: "20px"}}>
                             Friends
                       </NavText>
-                  </NavItem>
+                  </NavItem> */}
                   <NavItem eventKey="profile">
                       <NavIcon>
                           <FaUser size={25}/>
